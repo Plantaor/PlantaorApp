@@ -25,12 +25,13 @@ const Inscription = ({navigation}) => {
         <Text>Compte pro</Text>
       </View>
 
-      <View>
-        <TextInput placeholder="Prénom" onChangeText={(value) => setFirstname(value)}/>
-        <TextInput placeholder="Nom de famille" onChangeText={(value) => setLastname(value)}/>
-        <TextInput placeholder="Adresse email" onChangeText={(value)=>setEmail(value)}/>
-        <TextInput placeholder="Mot de passe" secureTextEntry={true} onChangeText={(value)=>setPassword(value)}/>
-        <TextInput placeholder="adress" />
+      <View >
+        <TextInput style={styles.input} placeholder="Prénom" onChangeText={(value) => setFirstname(value)}/>
+        <TextInput style={styles.input} placeholder="Nom de famille" onChangeText={(value) => setLastname(value)}/>
+        <TextInput style={styles.input} placeholder="Adresse email" onChangeText={(value)=>setEmail(value)}/>
+        <TextInput style={styles.input} placeholder="Mot de passe" secureTextEntry={true} onChangeText={(value)=>setPassword(value)}/>
+        <TextInput style={styles.input} placeholder="adress" onChangeText={(value) => setAdress(value)}/>
+        <TextInput style={styles.input} placeholder="Téléphone" keyboardType='numeric'  onChangeText={(value) => setPhone(value)}/>
       </View>
     </View>
     )
@@ -40,11 +41,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:-400
+        marginTop:-10
       },
       buttonContainer: {
         flexDirection: 'row',
         // Arrange items horizontally
+      },
+      input:{
+        width: 300,
+    height: 40,
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+        
+      },
+      TextInput:{
+        borderWidth:1,
+        borderColor:'#777',
+        padding:8,
+        margin:10,
+        width:500
+,
       },
       button: {
         backgroundColor: 'gray',

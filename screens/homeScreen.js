@@ -21,7 +21,7 @@ const HomeScreen = ({navigation}) => {
           Deja menbre?
           </Text>
           <TouchableOpacity onPress={()=>navigation.navigate('login')}>
-          <Text>Se connecter</Text>
+          <Text style>Se connecter</Text>
         </TouchableOpacity>
         
       </View>
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   },
   connexion:{
     flexDirection:'row',
+    padding:7
   }
 });
 

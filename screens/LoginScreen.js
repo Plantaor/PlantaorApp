@@ -6,6 +6,7 @@ const LoginScreen = ({navigation}) => {
     const [lastname, setlastname]= useStae(''); */
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [lastname, setLastname] = useState('');
 
   const handleLogin = () => {
     // Implement your login logic here
@@ -16,7 +17,44 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+<View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text>Compte client</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text>Compte Pro</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.textContainer}>
+        <Text>Compte client</Text>
+        <Text>Compte pro</Text>
+      </View>
+
       <TextInput
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        style={styles.input}
+      />
+       <TextInput
+        placeholder="Lastname"
+        value={lastname}
+        onChangeText={setLastname}
+        style={styles.input}
+      />
+       <TextInput
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        style={styles.input}
+      />
+       <TextInput
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        style={styles.input}
+      />
+       <TextInput
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
@@ -52,6 +90,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
+    borderRadius:20,
   },
   button: {
     backgroundColor: '#266B39',
