@@ -35,18 +35,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
   headerText: {
     color:'#266B39',
     fontSize: 30,
     marginBottom:10,
     fontWeight:'bold'
-    
   },
   littleText:{
     color:'#266B39',
     fontSize:30,
-
   },
   logo: {
     width: 300,

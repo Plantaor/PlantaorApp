@@ -11,7 +11,7 @@ const Inscription = ({navigation}) => {
     const [phone, setPhone]=useState('');
 
     return (
-        <View style={styles.containerHeader}>
+     <View style={styles.containerHeader}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
           <Text>Compte client</Text>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         // Arrange items horizontally
       },
       input:{
-        width: 300,
+        width: 200,
     height: 40,
     borderWidth: 1,
     marginBottom: 20,
