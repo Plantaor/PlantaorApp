@@ -17,49 +17,14 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-<View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Text>Compte client</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text>Compte Pro</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.textContainer}>
-        <Text>Compte client</Text>
-        <Text>Compte pro</Text>
-      </View>
-
       <TextInput
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
         style={styles.input}
       />
-       <TextInput
-        placeholder="Lastname"
-        value={lastname}
-        onChangeText={setLastname}
-        style={styles.input}
-      />
-       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        style={styles.input}
-      />
-       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        style={styles.input}
-      />
-       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        style={styles.input}
-      />
+       
+      
       <TextInput
         placeholder="Password"
         value={password}
