@@ -32,7 +32,7 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity onPress={()=>navigation.navigate('start')} style={styles.button}>
+      <TouchableOpacity onPress={()=>navigation.navigate('store')} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>

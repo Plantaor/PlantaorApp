@@ -1,19 +1,18 @@
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import StartScreen from '../screens/startScreen';
 import profile from '../screens/Profile';
 import panier from '../screens/Panier';
+import StoreScreen from '../screens/StoreScreen';
 
 const Tab = createBottomTabNavigator();
 
 const Tabnavigator =() =>{
 return(
 <Tabnavigator>
-    <Tab.Screen name="start" component={StartScreen} />
+    <Tab.Screen initialRouteName="store" name="store" component={StoreScreen} />
     <Tab.Screen name="profile" component={profile} />
     <Tab.Screen name="panier" component={panier} />
-    <Tab.Screen name="start" component={StartScreen} />
-
 </Tabnavigator>
 );
 };
-export default Tab;
+export default Tabnavigator;

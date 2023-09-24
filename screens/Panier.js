@@ -1,7 +1,7 @@
 import React from "react";
 import{View, Text, StyleSheet} from "react-native"
 
-const panier =()=>{
+const PanierScreen =()=>{
 return(
     <View style={styles.container}>
         <Text>this is the panier </Text>
@@ -14,4 +14,4 @@ const styles=StyleSheet.create({
 
     }
 })
-export default panier;
+export default PanierScreen;
