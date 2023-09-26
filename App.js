@@ -18,7 +18,7 @@ const Tab =createBottomTabNavigator();
 
  function StoreTabNavigator(){
   return(
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions ={{headerShown:false}}>
       <Tab.Screen name="store1" component={StoreScreen} />
     <Tab.Screen name="panier" component={PanierScreen} />
     <Tab.Screen name="stock" component={StockScreen} />
