@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Image } from 'react-native';
 import HomeScreen from './screens/homeScreen';
 import LoginScreen from './screens/LoginScreen';
 import StoreScreen from './screens/StoreScreen';
@@ -19,10 +19,38 @@ const Tab =createBottomTabNavigator();
  function StoreTabNavigator(){
   return(
     <Tab.Navigator screenOptions ={{headerShown:false}}>
-      <Tab.Screen name="store1" component={StoreScreen} />
-    <Tab.Screen name="panier" component={PanierScreen} />
-    <Tab.Screen name="stock" component={StockScreen} />
-    <Tab.Screen name="profile" component={ProfileScreen}/>
+      <Tab.Screen name="store1" component={StoreScreen}options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('./assets/icons/Call.png')}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}/>
+    <Tab.Screen name="panier" component={PanierScreen} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('./assets/icons/panier.png')}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }} />
+    <Tab.Screen name="stock" component={StockScreen} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('./assets/icons/Stock.png')}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}/>
+    <Tab.Screen name="profile" component={ProfileScreen} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('./assets/icons/Profile.png')}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}/>
   </Tab.Navigator>
   );
  }

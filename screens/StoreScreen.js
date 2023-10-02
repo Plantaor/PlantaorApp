@@ -1,34 +1,41 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './homeScreen';
-import Inscription from './InscriptionScreen';
-
-
-
+import React from 'react';
+import { View, Image, StyleSheet } from 'react-native';
 
 const StoreScreen = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>this is the store</Text>
-    </SafeAreaView>/* <NavigationContainer independent={"true"}>
-        <Tab.Navigator>
-          <Tab.Screen name="Store" component={StoreScreen} />
-          <Tab.Screen name="Inscription" component={Inscription} />
-          <Tab.Screen name="Start" component={StoreScreen} />
-        </Tab.Navigator>
-      </NavigationContainer></> */
-   
-  )
-}
-
-export default StoreScreen
+    <View style={styles.container}>
+      <View style={styles.navBar}></View>
+      <View style={styles.imageBlock}>
+        <Image
+          source={require("../assets/imagetore.png")}
+          style={styles.image}
+          resizeMode='contain'
+        />
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-        container: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        },
-})
+  imageBlock: {
+    backgroundColor: 'aliceblue',
+/*     aspectRatio: 1, 
+ */    height:200,
+    width:399, margin:1
+  },
+  image: {
+    flex: 1,
+    width: '100%',
+    height: 70,
+  },
+  navBar: {
+    backgroundColor: "#26348B",
+    height: 60,
+  },
+  container: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+});
+
+export default StoreScreen;
