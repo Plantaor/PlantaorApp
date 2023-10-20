@@ -1,10 +1,10 @@
 import * as React from "react";
-import { StyleSheet, View, Text,Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text,Image, TouchableOpacity, SafeAreaView } from "react-native";
 /* import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
  */
 const Inscription = () => {
   return (
-    <View style={styles.inscription}>
+    <SafeAreaView style={styles.inscription}>
       <Image
         style={[styles.remixIconsfilldevicerssFi, styles.iconMicrosoftLayout]}
         contentFit="cover"
@@ -85,7 +85,7 @@ const Inscription = () => {
         </TouchableOpacity>
      
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
 
 const StoreScreen = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.navBar}></View>
+    <SafeAreaView style={styles.container}>
       <View style={styles.imageBlock}>
         <Image
           source={require("../assets/imagetore.png")}
@@ -12,7 +11,7 @@ const StoreScreen = () => {
           resizeMode='contain'
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
