@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, SafeAreaView } from 'react-native'
 import React from 'react'
-import { CardStyleInterpolators } from '@react-navigation/stack'
 
 const StockScreen = () => {
   return (
-    <View>
-      <Text>StockScreen</Text>
-    </View>
+    <SafeAreaView  style={styles.container}>
+    <Text>Stock</Text>
+   </SafeAreaView>
   )
 }
 
@@ -15,6 +14,8 @@ export default StockScreen
 const styles = StyleSheet.create({
   container:{
     flex:1,
+    padding: 20,
+        margin:10,
 
   }
 })

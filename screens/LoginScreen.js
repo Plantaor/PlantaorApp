@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 const LoginScreen = ({navigation}) => {
    /*  const [firstname, setfirstname]= useState('');
@@ -17,6 +17,10 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+    <View>
+      <Pressable style={styles.rectangle} onPress={()=>{}} />
+    </View>
+    <View >
       <TextInput
         placeholder="Username"
         value={username}
@@ -35,6 +39,7 @@ const LoginScreen = ({navigation}) => {
       <TouchableOpacity onPress={()=>navigation.navigate('store')} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+    </View>
     </View>
   );
 };
@@ -71,6 +76,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  rectangle:{
+   
+  }
 });
 
 export default LoginScreen;

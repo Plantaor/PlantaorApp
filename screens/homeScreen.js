@@ -19,7 +19,7 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.connexion}>
         <Text>
           Deja menbre?
-          </Text>
+        </Text>
           <TouchableOpacity onPress={()=>navigation.navigate('login')}>
           <Text style>Se connecter</Text>
         </TouchableOpacity>

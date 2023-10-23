@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Header = () => {
+const HeaderComponent = () => {
   return (
     <View>
       <Text>header</Text>
@@ -9,4 +9,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeaderComponent

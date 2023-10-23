@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
+import HeaderComponent from '../components/HeaderComponent'; 
+import ProductList from '../components/ProductList';
 
 const StoreScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
+      <HeaderComponent/>
       <View style={styles.imageBlock}>
         <Image
           source={require("../assets/imagetore.png")}
           style={styles.image}
-          resizeMode='contain'
+          resizeMode='cover'
         />
       </View>
+      <ProductList/>
     </SafeAreaView>
   );
 };
@@ -34,6 +38,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
+    padding:3,
+    margin:0,
+    top:20,
+    width:'100%'
   },
 });
 
