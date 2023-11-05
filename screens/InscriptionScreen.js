@@ -1,8 +1,9 @@
-import * as React from "react";
-import { StyleSheet, View, Text,Image, TouchableOpacity, SafeAreaView } from "react-native";
+import  React,  { useState } from "react";
+import { StyleSheet, View, Text,Image, TouchableOpacity, SafeAreaView,TextInput } from "react-native";
 /* import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
  */
 const Inscription = () => {
+  const [username, setUsername]=useState('');
   return (
     <SafeAreaView style={styles.inscription}>
       <Image
@@ -15,6 +16,7 @@ const Inscription = () => {
         <View style={[styles.groupChild, styles.groupBorder]} />
       </View>
       <View style={styles.rectangleParent}>
+        <TextInput placeholder="enter votre nom" value={username}/>
         <View style={[styles.groupItem, styles.groupBorder]} />
         <View style={[styles.rectangleWrapper, styles.groupLayout]}>
           <View style={[styles.groupChild, styles.groupBorder]} />
@@ -45,6 +47,7 @@ const Inscription = () => {
       />
       <View
         style={[styles.inscriptionChild2, styles.inscriptionChildLayout1]}
+        
       />
       <View
         style={[styles.inscriptionChild3, styles.inscriptionChildLayout1]}

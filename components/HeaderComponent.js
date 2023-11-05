@@ -3,7 +3,7 @@ import React from 'react'
 
 const HeaderComponent = () => {
   return (
-    <View>
+    <View style>
       <Text>header</Text>
     </View>
   )

@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import HeaderComponent from '../components/HeaderComponent'; 
 import ProductList from '../components/ProductList';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const StoreScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderComponent/>
+      <HeaderComponent style={styles.header}/>
       <View style={styles.imageBlock}>
         <Image
           source={require("../assets/imagetore.png")}
           style={styles.image}
-          resizeMode='cover'
+          resizeMode='contain'
         />
       </View>
-      <ProductList/>
+      {/* <ProductList/> */}
+      <ScrollView></ScrollView>
     </SafeAreaView>
   );
 };
@@ -28,21 +30,18 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: '100%',
-    height: 70,
-  },
-  navBar: {
-    backgroundColor: "#26348B",
-    height: 60,
-  },
-  container: {
-    flexDirection: 'column',
-    flex: 1,
-    padding:3,
-    margin:0,
-    top:20,
+    width: '100%'
+    
+  }
+  ,navBar: {
+    backgroundColor:  'column',
     width:'100%'
   },
-});
-
+  header:{
+    flex:1,
+    widht:'100%',
+    height:37,
+    backgroundColor:'black'
+  }
+})
 export default StoreScreen;

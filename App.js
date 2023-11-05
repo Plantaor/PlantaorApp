@@ -16,7 +16,7 @@ import ProfileScreen from './screens/Profile';
 const Stack =createStackNavigator();
 const Tab =createBottomTabNavigator();
 
- function StoreTabNavigator(){
+ function TabNavigator(){
   return(
     <Tab.Navigator screenOptions ={{headerShown:false}}>
       <Tab.Screen name="store1" component={StoreScreen}options={{
@@ -60,7 +60,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="login" component={LoginScreen} />
-        <Stack.Screen name= "store" component={StoreTabNavigator}/>
+        <Stack.Screen name= "store" component={TabNavigator}/>
         <Stack.Screen name= "Inscription" component={Inscription}/>
         <Stack.Screen name= "start" component={StartScreen}/>
       </Stack.Navigator>
