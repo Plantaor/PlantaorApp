@@ -86,7 +86,6 @@ const Inscription = () => {
         rejoignez-nous
         </Text>
         </TouchableOpacity>
-     
       </View>
     </SafeAreaView>
   );

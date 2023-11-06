@@ -39,7 +39,7 @@ const Tab =createBottomTabNavigator();
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/Stock.png')}
-              style={{ width: size, height: size, tintColor: color }}
+              style={{ width: size, height: size, tintColor: 'color' }}
             />
           ),
         }}/>
