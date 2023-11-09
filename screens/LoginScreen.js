@@ -44,6 +44,9 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry
         style={styles.input}
       />
+      <TouchableOpacity>
+        <Text style={styles.Mpdoublie}>Mot de passe oublié</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
@@ -99,14 +102,12 @@ const styles = StyleSheet.create({
  */  },
     textContainer:{
       fontWeight:'bold',
-      fontSize: 18,
-    
+      fontSize: 18,  
   }, 
   row:{
     flexDirection: 'row',
    justifyContent: 'space-between',
-   marginBottom: 20,
-   
+   marginBottom: 20, 
   },
   button1:{
     flexDirection:'row',
@@ -164,7 +165,6 @@ const styles = StyleSheet.create({
     top:170,
     position:'absolute',
     left:55
-
   },
   usertpro:{
     fontSize:18,
@@ -173,7 +173,9 @@ const styles = StyleSheet.create({
     top:170,
     position:'absolute',
     left:40
-
+  },
+  Mpdoublie:{
+    fontSize:20
   },
   LineViewlayout:{
     height:1,
