@@ -19,15 +19,15 @@ const Tab =createBottomTabNavigator();
  function TabNavigator(){
   return(
     <Tab.Navigator screenOptions ={{headerShown:false}}>
-      <Tab.Screen name="store1" component={StoreScreen}options={{
+      <Tab.Screen name="Store" component={StoreScreen}options={{
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/Call.png')}
-              style={{ width: size, height: size, tintColor: color }}
+              style={{ width: size, height: size, tintColor: '#ff00ff' }}
             />
           ),
         }}/>
-    <Tab.Screen name="panier" component={PanierScreen} options={{
+    <Tab.Screen name="Panier" component={PanierScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/panier.png')}
@@ -35,7 +35,7 @@ const Tab =createBottomTabNavigator();
             />
           ),
         }} />
-    <Tab.Screen name="stock" component={StockScreen} options={{
+    <Tab.Screen name="Stock" component={StockScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/Stock.png')}
@@ -43,7 +43,7 @@ const Tab =createBottomTabNavigator();
             />
           ),
         }}/>
-    <Tab.Screen name="profile" component={ProfileScreen} options={{
+    <Tab.Screen name="Profile" component={ProfileScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/Profile.png')}

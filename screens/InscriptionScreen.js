@@ -15,8 +15,8 @@ const Inscription = () => {
       <View style={[styles.inscriptionInner, styles.groupLayout]}>
         <View style={[styles.groupChild, styles.groupBorder]} />
       </View>
-      <View style={styles.rectangleParent}>
-        <TextInput placeholder="enter votre nom" value={username}/>
+      <View >
+        <TextInput style={styles.rectangleParent} placeholder="enter votre nom" value={username}/>
         <View style={[styles.groupItem, styles.groupBorder]} />
         <View style={[styles.rectangleWrapper, styles.groupLayout]}>
           <View style={[styles.groupChild, styles.groupBorder]} />
@@ -353,6 +353,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rejoignezNous: {
+    backgroundColor:'gray',
     top: 584,
     left: 114,
     fontSize: 22,

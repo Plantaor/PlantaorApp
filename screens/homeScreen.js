@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground,SafeAreaView } from 'react-native';
 
 const HomeScreen = ({navigation}) => {
   return (
+    
     <ImageBackground source={require('../assets/images/MainPage.png')} style={styles.container}>
       
         <Image
@@ -17,15 +18,17 @@ const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.connexion}>
-        <Text>
+        <Text style={styles.textMembre}>
           Deja menbre?
         </Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('login')}>
-          <Text style>Se connecter</Text>
+          <TouchableOpacity  
+          onPress={()=>navigation.navigate('login')}>
+          <Text style={styles.space}>Se connecter</Text>
         </TouchableOpacity>
         
       </View>
     </ImageBackground>
+   
   );
 };
 
@@ -72,7 +75,19 @@ const styles = StyleSheet.create({
   },
   connexion:{
     flexDirection:'row',
-    padding:7
+    padding:10,
+    justifyContent:'space-between'
+  },
+  textMembre:{
+    color:'black',
+    fontSize:20,
+    right:20
+  
+  },
+  space:{
+    color:'black',
+    fontSize:20,
+    right:10
   }
 });
 
