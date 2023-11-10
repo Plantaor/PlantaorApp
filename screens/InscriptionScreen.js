@@ -1,7 +1,6 @@
 import  React,  { useState } from "react";
 import { StyleSheet, View, Text,Image, TouchableOpacity, SafeAreaView,TextInput } from "react-native";
-/* import { Color, FontFamily, Border, FontSize, Padding } from "../GlobalStyles";
- */
+
 const Inscription = () => {
   const [username, setUsername]=useState('');
   return (

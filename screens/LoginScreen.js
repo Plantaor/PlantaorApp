@@ -139,14 +139,14 @@ const styles = StyleSheet.create({
   },
   customer:{
     flexDirection:'row',
-    justifyContent:'space-between',  
-  },
+/*     justifyContent:'space-between',  
+ */  },
   user:{
     width:'40%',
     height:170,
 /*     backgroundColor:'black',
  */    top:-100,
-    marginRight:30,
+    marginRight:20,
     borderWidth: 1,
   },
   userPro:{
@@ -156,11 +156,9 @@ const styles = StyleSheet.create({
  */    top:-100,
     marginRight:30,
     borderWidth: 1,
-
   },
   usert:{
     fontSize:19,
-    
     textAlignVertical:'top',
     top:170,
     position:'absolute',
@@ -168,14 +166,13 @@ const styles = StyleSheet.create({
   },
   usertpro:{
     fontSize:18,
-    
     textAlignVertical:'top',
     top:170,
     position:'absolute',
     left:40
   },
   Mpdoublie:{
-    fontSize:20
+    fontSize:16
   },
   LineViewlayout:{
     height:1,
