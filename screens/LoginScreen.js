@@ -45,7 +45,7 @@ const LoginScreen = ({navigation}) => {
         style={styles.input}
       />
       <TouchableOpacity>
-        <Text style={styles.Mpdoublie}>Mot de passe oublié</Text>
+        <Text style={styles.Mpdoublie}>Mot de passe oublié ?</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Se connecter</Text>
@@ -85,6 +85,9 @@ const LoginScreen = ({navigation}) => {
                     </TouchableOpacity> 
                   </View>  
             </View>
+            <TouchableOpacity  onPress={()=>navigation.navigate('Inscription')}>
+              <Text style={styles.nouveauCompte}>je n'ai pas encore de compte ?</Text>
+            </TouchableOpacity>
   </SafeAreaView>
   );
 };
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
     height:170,
 /*     backgroundColor:'black',
  */    top:-100,
-    marginRight:30,
+    marginRight:1,
     borderWidth: 1,
   },
   usert:{
@@ -172,7 +175,13 @@ const styles = StyleSheet.create({
     left:40
   },
   Mpdoublie:{
-    fontSize:16
+    fontSize:16,
+    color:'green',
+    left:80,
+    top:-30
+  },
+  Mpdouble:{
+    fontSize:16,
   },
   LineViewlayout:{
     height:1,
@@ -207,6 +216,12 @@ const styles = StyleSheet.create({
   },
   apple:{
     right:-20
+  },
+  nouveauCompte:{
+    fontSize:15,
+    color:'green',
+    top:110,
+    right:85
   }
 
 });
