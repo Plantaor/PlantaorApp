@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
    alignItems: 'center',
    borderWidth: 1,
    /* justifyContent:'space-between', */
-   marginRight:20,
+   marginRight:10,
    borderRadius: 8,
    borderStyle:'solid'
   },

@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PanierScreen from './screens/Panier';
 import StockScreen from './screens/StockScreen';
 import ProfileScreen from './screens/Profile';
+import Scan from './screens/Scan';
 
 
 const Stack =createStackNavigator();
@@ -23,7 +24,7 @@ const Tab =createBottomTabNavigator();
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/Call.png')}
-              style={{ width: size, height: size, tintColor: '#ff00ff' }}
+              style={{ width: size, height: size, tintColor: color }}
             />
           ),
         }}/>
@@ -35,11 +36,19 @@ const Tab =createBottomTabNavigator();
             />
           ),
         }} />
+        <Tab.Screen name='Scan' component={Scan} options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('./assets/icons/scan.png')}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }} />
     <Tab.Screen name="Stock" component={StockScreen} options={{
           tabBarIcon: ({ color, size }) => (
             <Image
               source={require('./assets/icons/Stock.png')}
-              style={{ width: size, height: size, tintColor: 'color' }}
+              style={{ width: size, height: size, tintColor:color }}
             />
           ),
         }}/>
