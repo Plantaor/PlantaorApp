@@ -28,8 +28,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', */
   },
   image: {
-  
- 
   }
   ,navBar: {
   

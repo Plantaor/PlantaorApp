@@ -12,6 +12,8 @@ import PanierScreen from './screens/Panier';
 import StockScreen from './screens/StockScreen';
 import ProfileScreen from './screens/Profile';
 import Scan from './screens/Scan';
+import PersonanInformation from './screens/PersonanInformation';
+import Loginandsecurity from './screens/Loginandsecurity';
 
 
 const Stack =createStackNavigator();
@@ -72,6 +74,8 @@ export default function App() {
         <Stack.Screen name= "store" component={TabNavigator}/>
         <Stack.Screen name= "Inscription" component={Inscription}/>
         <Stack.Screen name= "start" component={StartScreen}/>
+        <Stack.Screen name= "personalInf" component={PersonanInformation}/>
+        <Stack.Screen name= "LoginSecurity" component={Loginandsecurity}/>
       </Stack.Navigator>
     </NavigationContainer>
     
