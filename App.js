@@ -14,8 +14,11 @@ import ProfileScreen from './screens/Profile';
 import Scan from './screens/Scan';
 import PersonanInformation from './screens/PersonanInformation';
 import Loginandsecurity from './screens/Loginandsecurity';
+import PaymentScreen from './screens/PaymentScreen';
+import HisrotiCommande from './screens/HisrotiCommande';
+import TermsOflegal from './screens/TermsOflegal';
 
-
+TermsOflegal
 const Stack =createStackNavigator();
 const Tab =createBottomTabNavigator();
 
@@ -76,6 +79,9 @@ export default function App() {
         <Stack.Screen name= "start" component={StartScreen}/>
         <Stack.Screen name= "personalInf" component={PersonanInformation}/>
         <Stack.Screen name= "LoginSecurity" component={Loginandsecurity}/>
+        <Stack.Screen name="payment" component={PaymentScreen}/>
+        <Stack.Screen name ="HistoriCommande" component={HisrotiCommande}/>
+        <Stack.Screen name = 'TermOflegal' component={TermsOflegal}/>
       </Stack.Navigator>
     </NavigationContainer>
     
