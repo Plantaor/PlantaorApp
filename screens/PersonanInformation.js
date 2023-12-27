@@ -1,6 +1,26 @@
-import { StyleSheet, Text, View,Image, TouchableOpacity, Input } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Tabnavigator from '../navigation/tabs'
+
+const PersonanInformation = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Personal Information</Text>
+    </View>
+  )
+}
+
+export default PersonanInformation
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    padding: 20,
+    margin:10,
+  }
+})
+
+/* import { StyleSheet, Text, View,Image, TouchableOpacity, Input } from 'react-native'
+import React from 'react'
 
 const PersonanInformation = () => {
   return (
@@ -12,7 +32,7 @@ const PersonanInformation = () => {
       </TouchableOpacity>
       <Text style={styles.ProfileText}>Informations personels</Text>
 
-      <View style={style.edit}>
+      <View style={styles.edit}>
         <Input/>
 
       </View>
@@ -20,9 +40,6 @@ const PersonanInformation = () => {
     
   )
 }
-
-export default PersonanInformation
-
 const styles = StyleSheet.create({
   container:{
     flex:1,
@@ -34,4 +51,9 @@ const styles = StyleSheet.create({
     color:"green",
     textAlign:'left',
 },
+edit:{
+  flex:1,
+}
 })
+export default PersonanInformation
+ */
