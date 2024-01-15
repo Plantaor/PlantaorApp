@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import profile from '../screens/Profile';
+import profile from '../screens/ScreenProfile/Profile';
 import panier from '../screens/Panier';
 import StoreScreen from '../screens/StoreScreen';
 

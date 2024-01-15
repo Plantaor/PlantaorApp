@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Image, TouchableOpacity, Input } from 'react-native'
 import React from 'react'
-import Tabnavigator from '../navigation/tabs'
+import Tabnavigator from '../../navigation/tabs'
 
 const PersonanInformation = () => {
   return (

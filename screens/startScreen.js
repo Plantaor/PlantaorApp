@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, FontAwesome } from "@expo/vector-icons"; // Import icons from the appropriate library
 import Panier from "./Panier";
-import Profile from "./Profile";
+import Profile from "./ScreenProfile/Profile";
 
 const Tab = createBottomTabNavigator();
 
