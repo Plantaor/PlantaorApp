@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'space-between',
     justifyContent:'space-between',
-    top:70
+    top:40
   },
   input: {
     width: '80%',
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
   },
   customer:{
     flexDirection:'row',
+    top:25
 /*     justifyContent:'space-between',  
  */  },
   user:{
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   Oconnexion:{
     flexDirection:'column',
     alignItems:'flex-start',
-    top:110
+    top:70
   },
 
   button: {
@@ -213,15 +214,15 @@ const styles = StyleSheet.create({
   },
   textConnexion:{
     fontSize:18
-  },
+  }, 
   apple:{
     right:-20
   },
   nouveauCompte:{
     fontSize:15,
     color:'green',
-    top:110,
-    right:85
+    top:70,
+    // right:10
   }
 
 });

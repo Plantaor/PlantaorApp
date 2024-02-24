@@ -51,7 +51,7 @@ const styles=StyleSheet.create({
     container:{
         flex:1,
         padding: 20,
-        margin:10,
+        margin:50,
     },
     container2:{
         top:20,
