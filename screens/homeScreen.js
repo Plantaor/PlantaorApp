@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginBottom: 80,
     alignItems: 'center',
     width:"50%",
-    right:-100
+    left:90
    
   },
   buttonText: {
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     justifyContent:'space-between'
   },
   textMembre:{
-    color:'black',
+    color:'green',
     fontSize:20,
     right:20
   
   },
   space:{
-    color:'black',
+    color:'green',
     fontSize:20,
     right:10
   }

@@ -8,7 +8,21 @@ const LoginScreen = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 /*     const [lastname, setLastname] = useState('');
+
  */
+    const [code, setCode] = useState(''); // Ajoutez un état pour le code
+    const [showCodeField, setShowCodeField] = useState(false); // Ajoutez un état pour gérer l'affichage du champ de code
+    const [showBasicFields, setShowBasicFields] = useState(true); // Ajoutez un état pour gérer l'affichage des champs de bas
+
+    const handleUserProPress = () => {
+        setShowCodeField(true); // Changez la valeur de showCodeField à true lorsque UserPro est pressé
+        setShowBasicFields(false); // Cachez les champs de base
+    };
+
+    const handleUserPress = () => {
+        setShowCodeField(false); // Cachez le champ de code
+        setShowBasicFields(true); // Affichez les champs de base
+    };
   const handleLogin = () => {
     // Implement your login logic here
     // For demonstration purposes, we'll just log the username and password
@@ -24,15 +38,19 @@ const LoginScreen = ({navigation}) => {
     
     <SafeAreaView style={styles.container} >
       <View style={styles.customer}>
-        <TouchableOpacity style={styles.user}>
-          <Text style={styles.usert}>user</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.userPro}>
-        <Text style={styles.usertpro}>userPro</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={
+        [styles.user, showBasicFields ? styles.active : styles.disabled]
+        } onPress={handleUserPress} disabled={showBasicFields}>
+                    <Text style={styles.usert}>user</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={
+                  [styles.userPro, showCodeField ? styles.active : styles.disabled]
+                  } onPress={handleUserProPress} disabled={showCodeField}>
+                    <Text style={styles.usertpro}>userPro</Text>
+                </TouchableOpacity>
       </View>
       <TextInput
-        placeholder="Username"
+        placeholder="Email ou username"
         value={username}
         onChangeText={setUsername}
         style={styles.input}
@@ -44,6 +62,14 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry
         style={styles.input}
       />
+      {showCodeField && ( // Affichez le champ de code uniquement si showCodeField est true
+                <TextInput
+                    placeholder="Code"
+                    value={code}
+                    onChangeText={setCode}
+                    style={styles.input}
+                />
+            )}
       <TouchableOpacity>
         <Text style={styles.Mpdoublie}>Mot de passe oublié ?</Text>
       </TouchableOpacity>
@@ -223,7 +249,14 @@ const styles = StyleSheet.create({
     color:'green',
     top:70,
     // right:10
-  }
+  },
+  active: {
+    // Styles pour l'état actif
+},
+disabled: {
+    // Styles pour l'état désactivé (grisâtre)
+    backgroundColor: 'gray',
+},
 
 });
 

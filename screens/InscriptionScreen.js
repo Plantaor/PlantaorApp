@@ -14,13 +14,13 @@ const Inscription = ({navigation}) =>{
       />
     </View>
     <TextInput
-      placeholder="Firstname"
+      placeholder="Prenom"
       value={Firstname}
       onChangeText={setFirstname}
       style={styles.input}
     />
      <TextInput
-      placeholder="Lastname"
+      placeholder="Nom"
       value={Lastname}
       onChangeText={setLastname}
       style={styles.input}
