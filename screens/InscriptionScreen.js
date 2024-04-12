@@ -92,8 +92,7 @@ container: {
   backgroundColor: "#fff",
   borderStyle: "solid",
   borderColor: "#000",
-/*     backgroundColor:'blue'
-*/  },
+ },
 banner:{
   top:-20
 },
@@ -108,16 +107,19 @@ row:{
 },
 button1:{
   flexDirection:'row',
-  width: '40%',
-/*    backgroundColor: '#DDDDDD',
-*/   borderRadius:1,
- padding: 15,
- alignItems: 'center',
- borderWidth: 1,
- /* justifyContent:'space-between', */
- marginRight:10,
- borderRadius: 8,
- borderStyle:'solid'
+    width: '40%',
+   borderRadius:1,
+   padding: 15,
+   alignItems: 'center',
+   marginRight:10,
+   borderRadius: 8,
+   borderStyle:'solid',
+   backgroundColor: '#FFFFFF',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    
+    shadowOffset : { width: 0, height: 1},
 },
 connexion:{
   

@@ -145,11 +145,17 @@ const styles = StyleSheet.create({
  */   borderRadius:1,
    padding: 15,
    alignItems: 'center',
-   borderWidth: 1,
+  //  borderWidth: 1,
    /* justifyContent:'space-between', */
    marginRight:10,
    borderRadius: 8,
-   borderStyle:'solid'
+   borderStyle:'solid',
+   backgroundColor: '#FFFFFF',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 6,
+    
+    shadowOffset : { width: 0, height: 1},
   },
   connexion:{
     
