@@ -218,10 +218,10 @@ const styles = StyleSheet.create({
   },
   LineViewlayout:{
     height:1,
-    width:110,
+    width:100,
     borderStyle:"solid",
     top:-10, 
-    backgroundColor:'black'
+    backgroundColor:'gray'
 
   },
   Oconnexion:{

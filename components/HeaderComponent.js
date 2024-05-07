@@ -3,15 +3,16 @@ import React from 'react'
 
 const HeaderComponent = () => {
   return (
-    <View style={StyleSheet.header}>
+    <View style={styles.header}>
       <Text>header</Text>
     </View>
   )
 }
 const styles = StyleSheet.create({
   header:{
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '##ffff',
     paddingTop: 30,
+    borderBlockColor:33
   }
 })
 
