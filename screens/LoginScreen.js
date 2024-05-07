@@ -24,7 +24,13 @@ const LoginScreen = ({ navigation }) => {
     // Implement your login logic here
     // For demonstration purposes, we'll just log the username and password
     console.log(
-      "identifier: " + identifier + "" + "\n password: " + password + "\n code: " + code
+      "identifier: " +
+        identifier +
+        "" +
+        "\n password: " +
+        password +
+        "\n code: " +
+        code
     );
     navigation.navigate("store");
   };
@@ -204,7 +210,7 @@ const styles = StyleSheet.create({
     // right:10
   },
 });
-const validationSchema = Yup.object({
+const validationSchema = Yup.object().shape({
   identifier: Yup.string()
     .required("Email ou nom d'utilisateur requis")
     .test("isEmailOrUsername", "Email/nom d'utilisateur invalide", (value) => {
