@@ -157,29 +157,7 @@ const styles = StyleSheet.create({
     top: 170,
     position: "absolute",
     left: 55,
-  },
-  usertpro: {
-    fontSize: 18,
-    textAlignVertical: "top",
-    top: 170,
-    position: "absolute",
-    left: 40,
-  },
-  Mpdoublie: {
-    fontSize: 16,
-    color: "green",
-    left: 80,
-  },
-  Mpdouble: {
-    fontSize: 16,
-  },
-  LineViewlayout: {
-    height: 1,
-    width: 110,
-    borderStyle: "solid",
-    top: -10,
-    backgroundColor: "black",
-  },
+  }, 
   button: {
     backgroundColor: "#266B39",
     paddingVertical: 10,
