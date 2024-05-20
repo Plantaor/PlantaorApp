@@ -9,7 +9,7 @@ import {
 import React from "react";
 import SearchBar from "./SearchBar";
 import { useState, useEffect } from "react";
-import List from "./List";
+// import List from "./List";
 import ProfileButton from "./ProfileImage";
 
 const HeaderComponent = () => {
