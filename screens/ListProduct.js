@@ -2,14 +2,14 @@ import React from 'react'
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
 
 const ListProduct = () => {
-    const products=[
-        {id:1,name:"Sex boost",price:24.99, image:require('../assets/icons/icon_sexboost.svg')},
-        {id:2,name:"Neuro-calm",price:24.99},
-        {id:3,name:"Immuno-T",price:24.99},
-        {id:4,name:"Transit",price:24.99},
+    const products = [
+        { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/icons/icon_sexboost.svg') },
+        { id: 2, name: "Neuro-calm", price: 24.99 },
+        { id: 3, name: "Immuno-T", price: 24.99 },
+        { id: 4, name: "Transit", price: 24.99 },
     ];
 
-    const renderItem=({item})=> (
+    const renderItem = ({ item }) => (
         <View style={styles.item}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.price}>{item.price}</Text>
@@ -21,7 +21,7 @@ const ListProduct = () => {
             <FlatList
                 data={products}
                 renderItem={renderItem}
-                keyExtractor={item=>item.id}
+                keyExtractor={item => item.id}
                 numColumns={2}
             />
         </View>
@@ -31,12 +31,12 @@ const ListProduct = () => {
 export default ListProduct
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         // backgroundColor:'#fff',
         padding: 20,
     },
-    item:{
+    item: {
         width: 100,
         height: 100,
         backgroundColor: '#f9c2ff',
