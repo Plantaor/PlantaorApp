@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { SvgUri } from 'react-native-svg';
+
 
 const ListProduct = () => {
     const products = [
-        { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/icons/icon_sexboost.svg') },
+        { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/images/transit.jpg') },
         { id: 2, name: "Neuro-calm", price: 24.99 },
         { id: 3, name: "Immuno-T", price: 24.99 },
         { id: 4, name: "Transit", price: 24.99 },
@@ -76,13 +78,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 5,
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
     },
     price: {
         fontSize: 14,
         color: 'gray',
         textAlign: 'center',
         marginTop: 2,
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
     },
 });
