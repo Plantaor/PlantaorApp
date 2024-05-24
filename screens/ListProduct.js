@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { SvgUri } from 'react-native-svg';
+
 
 const ListProduct = () => {
     const products = [
@@ -78,13 +80,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 5,
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
     },
     price: {
         fontSize: 14,
         color: 'gray',
         textAlign: 'center',
         marginTop: 2,
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
     },
 });
