@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { SvgUri } from 'react-native-svg';
+
 
 const ListProduct = () => {
     const products = [
-        { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/icons/icon_sexboost.svg') },
-        { id: 2, name: "Neuro-calm", price: 24.99 },
-        { id: 3, name: "Immuno-T", price: 24.99 },
-        { id: 4, name: "Transit", price: 24.99 },
+        { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/images/sex-boost.png') },
+        { id: 2, name: "Neuro-calm", price: 24.99, image: require('../assets/images/neuro-calm.jpg') },
+        { id: 3, name: "Immuno-T", price: 24.99, image: require('../assets/images/immuni-t.jpg') },
+        { id: 4, name: "Transit", price: 24.99, image: require('../assets/images/Transit.jpg') },
     ];
 
     const renderItem = ({ item }) => (
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         borderRadius: 10,
+        padding: 10,
     },
     itemContainer: {
         alignItems: 'center',
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
+        overflow: 'hidden', // Pour s'assurer que l'image ne dépasse pas du cadre
     },
     image: {
         width: '100%',
@@ -76,13 +80,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 5,
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
     },
     price: {
         fontSize: 14,
         color: 'gray',
         textAlign: 'center',
         marginTop: 2,
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
     },
 });
