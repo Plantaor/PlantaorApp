@@ -7,35 +7,34 @@ const products = [
     productId: 1,
     name: "Sex boost",
     price: 24.99,
-    image: require("../assets/images/imuno-t.svg"),
+    image: require("../assets/images/sex-boost.png"),
     quantity: 1,
   },
   {
     productId: 2,
     name: "Neuro-calm",
     price: 24.99,
-    image: require("../assets/images/neuro-calm.svg"),
+    image: require("../assets/images/neuro-calm.jpg"),
     quantity: 1,
   },
   {
     productId: 3,
     name: "Immuno-T",
     price: 24.99,
-    image: require("../assets/images/imuno-t.svg"),
+    image: require("../assets/images/immuni-t.jpg"),
     quantity: 1,
   },
   {
     productId: 4,
     name: "Transit",
     price: 24.99,
-    image: require("../assets/images/imuno-t.svg"),
+    image: require("../assets/images/Transit.jpg"),
     quantity: 1,
   },
 ];
 const PanierScreen = () => {
   const [panierProductsList, setPanierProductsList] = useState(products);
   const redirectToProduct = (productId) => {
-    console.log(productId);
     // TODO redirect products detailed page
     console.log(productId);
     // return <Redirect href="/" />;
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: "100%",
     backgroundColor: "white",
-
   },
   panierText: {
     fontSize: 35,

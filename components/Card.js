@@ -7,7 +7,6 @@ import {
   View,
 } from "react-native";
 import AppButton from "./AppButton";
-import Logo from "../assets/images/imuno-t.svg";
 
 export default function Card({
   productId,
@@ -25,7 +24,7 @@ export default function Card({
       <View style={styles.card}>
         <View style={styles.bodyContainer}>
           <View style={styles.imageContainer}>
-            <Logo style={styles.image} width={74} height={104} />
+            <Image source={image} style={styles.image} />
           </View>
           <View style={styles.detailsContainer}>
             <Text style={styles.name}>{name}</Text>
