@@ -8,7 +8,7 @@ const ListProduct = () => {
         { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/images/sex-boost.png') },
         { id: 2, name: "Neuro-calm", price: 24.99, image: require('../assets/images/neuro-calm.jpg') },
         { id: 3, name: "Immuno-T", price: 24.99, image: require('../assets/images/immuni-t.jpg') },
-        { id: 4, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
+        { id: 4, name: "Transit", price: 24.99, image: require('../assets/images/Transit.jpg') },
     ];
 
     const renderItem = ({ item }) => (
