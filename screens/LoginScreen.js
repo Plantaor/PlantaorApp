@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <AppForm
-        initialValues={{ identifier: "", password: "", code: "" }}
+        initialValues={{ identifier: "example@example.com", password: "asddsa123@", code: "" }}
         onSubmit={handleLogin}
         validationSchema={validationSchema}
       >
