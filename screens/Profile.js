@@ -76,13 +76,14 @@ const styles = StyleSheet.create({
         width: 125,
         height: 125,
         borderRadius: 100, // Half of the width/height to make it a perfect circle
-        marginBottom: 10,
+        marginTop: 50,
 
     },
     profileName: {
         fontSize: 30,
         marginLeft: 15,
         flex: 1, // Allows the name to take up all the space it needs
+        marginTop: 50,
     },
     arrowIcon: {
         width: 20,
