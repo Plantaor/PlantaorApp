@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         flex: 1, // Allows the name to take up all the space it needs
         marginTop: 60,
         color: '#000000', // Text color set to black
-        fontFamily: 'Lato-Bold', // Use Lato-Bold for more clarity
+
     },
     Imagefleche: {
         marginTop: 70,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         marginBottom: 1,
         color: '#000000', // Text color set to black
         padding: 10,
-        fontFamily: 'Lato-Bold', // Use Lato-Bold for section titles
+
     },
     boldText: {
         fontWeight: 'bold',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         flex: 1,
         color: '#000000',
-        fontFamily: 'Lato-Regular', // Use Lato-Regular for regular text
+
     },
     arrow: {
         width: 19,
