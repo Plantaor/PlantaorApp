@@ -4,20 +4,21 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image } from "r
 const ProfileScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
-
             <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.profileContainer}>
                 <Image
                     source={require('../assets/images/femme-medecin.png')}
                     style={styles.profileImage}
                 />
                 <Text style={styles.profileName}>Agnes</Text>
-                <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
-
+                <Image
+                    source={require('../assets/icons/fleche.png')}
+                    style={styles.Imagefleche}
+                />
             </TouchableOpacity>
             <View style={styles.separator} />
             <View style={styles.container2}>
                 <View style={styles.setting}>
-                    <Text style={styles.sectionTitle}>Réglages</Text>
+                    <Text style={[styles.sectionTitle, styles.boldText]}>Réglages</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.optionContainer}>
                         <Image source={require('../assets/icons/profil.png')} style={styles.optionIcon} />
                         <Text style={styles.optionText}>Personal information</Text>
@@ -44,7 +45,7 @@ const ProfileScreen = ({ navigation }) => {
                     <View style={styles.separator} />
                 </View>
                 <View style={styles.Legal}>
-                    <Text style={styles.sectionTitle}>Legal</Text>
+                    <Text style={[styles.sectionTitle, styles.boldText]}>Legal</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('TermOflegal')} style={styles.optionContainer}>
                         <Image source={require('../assets/icons/terms_service.jpg')} style={styles.optionIcon} />
                         <Text style={styles.optionText}>Terms of service</Text>
@@ -52,8 +53,8 @@ const ProfileScreen = ({ navigation }) => {
                     </TouchableOpacity>
                     <View style={styles.separator} />
                     <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.optionContainer}>
-                        <Text style={styles.optionText}>Privacy policy</Text>
-                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                        <Text style={styles.optionTextPolicy}>Privacy policy</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrow} />
                     </TouchableOpacity>
                     <View style={styles.separator} />
                 </View>
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#FFFFFF', // Set background color to white
     },
     profileContainer: {
         flexDirection: 'row',
@@ -86,8 +88,9 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     arrowIcon: {
-        width: 20,
-        height: 20,
+        width: 19,
+        height: 18,
+        marginTop: 20,
     },
     container2: {
         flex: 2,
@@ -101,9 +104,25 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 25,
-        fontWeight: '500',
         marginBottom: 1,
+        color: '#000000', // Text color set to black
+        padding: 10,
 
+    },
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: 25,
+    },
+    optionTextPolicy: {
+        marginLeft: 55,
+        fontSize: 18,
+        flex: 1,
+        color: '#000000',
+
+    },
+    arrow: {
+        width: 19,
+        height: 18,
     },
     optionContainer: {
         flexDirection: 'row',
@@ -118,11 +137,14 @@ const styles = StyleSheet.create({
     optionText: {
         fontSize: 18,
         flex: 1,
+        color: '#000000', // Text color set to black
+
     },
     separator: {
         height: 1,
         width: '100%',
         backgroundColor: '#E0E0E0',
+        marginTop: 1,
     },
 });
 
