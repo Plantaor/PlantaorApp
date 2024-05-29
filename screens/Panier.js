@@ -28,7 +28,7 @@ const products = [
     productId: 4,
     name: "Transit",
     price: 24.99,
-    image: require("../assets/images/Transit.jpg"),
+    image: require("../assets/images/transit.jpg"),
     quantity: 1,
   },
 ];
