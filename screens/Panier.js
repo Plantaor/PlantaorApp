@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  Button,
+} from "react-native";
 import Card from "../components/Card";
-import AppEmptyPlaceHolder from "../components/AppEmptyPlaceholder";
+import AppButton from "../components/AppButton";
 const products = [
   {
     productId: 1,
@@ -61,35 +68,70 @@ const PanierScreen = () => {
     return;
   };
 
+  const handleGoToCheckout = () => {
+    console.log("redirect to Checkout");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {panierProductsList.length > 0 ? (
         <>
-          <Text style={styles.panierText}>Panier</Text>
+          <View style={styles.listContainer}>
+            <Text style={styles.panierText}>Panier</Text>
 
-          <FlatList
-            data={panierProductsList}
-            keyExtractor={(panierProductsList) =>
-              panierProductsList.productId.toString()
-            }
-            renderItem={({ item }) => (
-              <Card
-                productId={item.productId}
-                name={item.name}
-                price={item.price + "€"}
-                image={item.image}
-                quantity={item.quantity}
-                onPressCard={() => redirectToProduct(item.productId)}
-                onPressIncreaseQuantity={() =>
-                  handleIncreaseQuantity(item.productId)
-                }
-                onPressDecreaseQuantity={() =>
-                  handleDecreaseQuantity(item.productId, item.quantity)
-                }
-                onPressDeleteFromList={() => removeProduct(item.productId)}
-              />
-            )}
-          />
+            <FlatList
+              data={panierProductsList}
+              keyExtractor={(panierProductsList) =>
+                panierProductsList.productId.toString()
+              }
+              renderItem={({ item }) => (
+                <Card
+                  productId={item.productId}
+                  name={item.name}
+                  price={item.price}
+                  image={item.image}
+                  quantity={item.quantity}
+                  onPressCard={() => redirectToProduct(item.productId)}
+                  onPressIncreaseQuantity={() =>
+                    handleIncreaseQuantity(item.productId)
+                  }
+                  onPressDecreaseQuantity={() =>
+                    handleDecreaseQuantity(item.productId, item.quantity)
+                  }
+                  onPressDeleteFromList={() => removeProduct(item.productId)}
+                />
+              )}
+            />
+          </View>
+          <View style={styles.pricesContainer}>
+            <View style={styles.price}>
+              <Text style={styles.label}>Total</Text>
+              <Text style={styles.value}>124,95€</Text>
+            </View>
+            <View style={styles.price}>
+              <Text style={styles.label}>Livraison</Text>
+              <Text style={styles.value}>29,99€</Text>
+            </View>
+            <View style={styles.price}>
+              <Text style={styles.label}>Total</Text>
+              <Text style={styles.value}>154,94€</Text>
+            </View>
+            <AppButton
+              title="passer à la caisse"
+              onPress={handleGoToCheckout}
+              style={{
+                button: {
+                  width: "90%",
+                  backgroundColor: "#64A962",
+                },
+                text: {
+                  color: "black",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                },
+              }}
+            />
+          </View>
         </>
       ) : (
         <Text style={styles.panierText}>votre panier est vide</Text>
@@ -102,9 +144,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     maxWidth: "100%",
     backgroundColor: "white",
+  },
+  listContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "70%",
+    maxHeight: "70%",
+    backgroundColor: "white",
+  },
+  pricesContainer: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  price: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+  },
+  label: {
+    width: "50%",
+    fontSize: 20,
+  },
+  value: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "right",
   },
   panierText: {
     fontSize: 35,
