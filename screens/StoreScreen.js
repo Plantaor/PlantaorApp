@@ -7,32 +7,33 @@ import ListProduct from './ListProduct';
 const StoreScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderComponent style={styles.header}/>
+      <HeaderComponent style={styles.header} />
 
       <Image
         source={require("../assets/imagetore.png")}
         resizeMode="contain"
-        style={{width: "100%", height: "50%"}}/>
+        style={{ width: "100%", height: "50%" }} />
 
       <View style={styles.listContainer}>
-        <ListProduct/>
+        <ListProduct />
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   listContainer: {
     flex: 1,
     padding: 20,
   },
-  header:{
-    width:'100%',
-    height:'40%',
-    color:'black'
+  header: {
+    width: '100%',
+    height: '40%',
+    color: 'black'
   }
 })
 
