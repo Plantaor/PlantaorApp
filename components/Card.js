@@ -28,7 +28,7 @@ export default function Card({
           </View>
           <View style={styles.detailsContainer}>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.price}>{price}</Text>
+            <Text style={styles.price}>{price}€</Text>
           </View>
           <View style={styles.actionsContainer}>
             <View
