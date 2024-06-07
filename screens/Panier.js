@@ -23,7 +23,7 @@ const products = [
       productId: 2,
       name: "Neuro-calm",
       price: 24.99,
-      image: require("../assets/images/neuro-calm.png"),
+      image: require("../assets/images/neurocalm.png"),
       quantity: 1,
    },
    {
@@ -37,6 +37,8 @@ const products = [
       productId: 4,
       name: "Transit",
       price: 24.99,
+      image: require("../assets/images/transit.png"),
+
       quantity: 1,
    },
 ];
@@ -163,7 +165,6 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
       backgroundColor: "white",
-      marginTop:15
    },
    listContainer: {
       flex: 1,
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
       fontSize: 35,
       color: "green",
       textAlign: "center",
-      marginVertical: 20,
+      marginTop:50
    },
    productContainer: {
       flexDirection: "row",
