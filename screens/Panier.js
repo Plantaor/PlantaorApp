@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -41,10 +42,12 @@ const products = [
 ];
 const PanierScreen = () => {
   const [panierProductsList, setPanierProductsList] = useState(products);
+  const navigation = useNavigation();
+
   const redirectToProduct = (productId) => {
     // TODO redirect products detailed page
     console.log(productId);
-    // return <Redirect href="/" />;
+    navigation.navigate("productDetail", { productId });
   };
   const removeProduct = (productId) => {
     setPanierProductsList((prevFavoriteList) =>

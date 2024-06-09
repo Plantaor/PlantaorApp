@@ -8,19 +8,36 @@ const product = {
   price: 24.99,
   image: require("../assets/images/immuni-t.jpg"),
   quantity: 1,
+  description:
+    "Les troubles intestinaux sont causés par un mauvais fonctionnement de votre système digestif. La plupart d’entre eux se manifestent dans votre estomac (perte d’appétit, nausées, brûlures, hoquets, ballonnements) .",
+  details: "product Details",
 };
 const DetailsProduct = () => {
   const [productDetails, setProductDetails] = useState(product);
+  const [showDescription, setShowDescription] = useState(true);
 
   const onPressIncreaseQuantity = () => {
-    setProductDetails({ ...productDetails, quantity: quantity + 1 });
+    setProductDetails({
+      ...productDetails,
+      quantity: productDetails.quantity + 1,
+    });
   };
 
   const onPressDecreaseQuantity = () => {
-    if (quantity > 0) {
-      setProductDetails({ ...productDetails, quantity: quantity - 1 });
+    if (productDetails.quantity > 0) {
+      setProductDetails({
+        ...productDetails,
+        quantity: productDetails.quantity - 1,
+      });
     }
     return;
+  };
+
+  const onPressAdd = () => {
+    console.log("pressed");
+  };
+  const onPressGoToCHeckout = () => {
+    console.log("pressed to mi");
   };
   return (
     <View style={styles.container}>
@@ -47,7 +64,7 @@ const DetailsProduct = () => {
                 text: {
                   color: "black",
                   fontSize: 25,
-                  fontWeight:"bold"
+                  fontWeight: "bold",
                 },
               }}
             />
@@ -72,6 +89,96 @@ const DetailsProduct = () => {
             />
           </View>
         </View>
+        <View style={styles.productDescription}>
+          <View style={styles.productDescriptionBtns}>
+            <View style={styles.btnsContainer}>
+              <AppButton
+                onPress={() => setShowDescription(true)}
+                title={"Description"}
+                style={{
+                  button: {
+                    backgroundColor: "white",
+                    width: "100%",
+                    paddingVertical: 5,
+                    paddingHorizontal: 5,
+                  },
+                  text: {
+                    color: "black",
+                  },
+                }}
+              />
+              <View style={styles.dot} />
+            </View>
+            <View style={styles.btnsContainer}>
+              <AppButton
+                onPress={() => setShowDescription(false)}
+                title={"Details"}
+                style={{
+                  button: {
+                    backgroundColor: "white",
+                    width: "100%",
+                    paddingVertical: 5,
+                    paddingHorizontal: 5,
+                  },
+                  text: {
+                    color: "black",
+                  },
+                }}
+              />
+              <View style={styles.dot} />
+            </View>
+          </View>
+          <View style={styles.productDescriptionText}>
+            {showDescription ? (
+              <Text>{product.description}</Text>
+            ) : (
+              <Text>{product.details}</Text>
+            )}
+          </View>
+        </View>
+        <View style={styles.actionsBtnContainer}>
+          <AppButton
+            title="+"
+            onPress={onPressGoToCHeckout}
+            style={{
+              button: {
+                width: 50,
+                height: 50,
+                paddingVertical: 0,
+                paddingHorizontal: 0,
+                backgroundColor: "white",
+                borderRadius: 24,
+                shadowColor: "black",
+                shadowOffset: {
+                  width: 0,
+                  height: 0,
+                },
+                shadowOpacity: 1,
+                shadowRadius: 1,
+                elevation: 1, // Add this line for Androidu
+              },
+              text: {
+                color: "black",
+                fontSize: 30,
+              },
+            }}
+          />
+          <AppButton
+            title="Passer la commande"
+            onPress={onPressGoToCHeckout}
+            style={{
+              button: {
+                width: "70%",
+                backgroundColor: "#64A962",
+              },
+              text: {
+                color: "black",
+                fontSize: 20,
+                fontWeight: "bold",
+              },
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -83,7 +190,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "orangered",
+    backgroundColor: "white",
   },
   panierText: {
     fontSize: 35,
@@ -108,7 +215,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     width: "100%",
-    backgroundColor: "blue",
   },
   detailsText: {
     fontSize: 20,
@@ -121,8 +227,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     padding: 16,
-
-    backgroundColor: "purple",
   },
   quantityContainer: {
     alignItems: "center",
@@ -132,9 +236,44 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 25,
     overflow: "hidden",
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 1,
+    elevation: 1, // Add this line for Android
   },
   quantity: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  productDescription: {},
+  productDescriptionBtns: {
+    width: "100%",
+    flexDirection: "row",
+    marginLeft: 5,
+    gap: 5,
+  },
+  productDescriptionText: {
+    margin: 5,
+  },
+  btnsContainer: {
+    alignItems: "center",
+    flexDirection: "column",
+    width: "33%",
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: "green",
+    marginTop: 8,
+  },
+  actionsBtnContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
 });
