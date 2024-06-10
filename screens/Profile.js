@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
         height: 125,
         borderRadius: 100,
         marginTop: 40,
-        marginLeft: 10,
     },
     profileName: {
         fontSize: 30,
