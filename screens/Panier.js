@@ -37,7 +37,7 @@ const products = [
       productId: 4,
       name: "Transit",
       price: 24.99,
-      image: require("../assets/images/transit.png"),
+      image: require("../assets/images/transit.jpg"),
 
       quantity: 1,
    },
@@ -121,9 +121,7 @@ const PanierScreen = () => {
                   )}
                />
 
-               <View style={styles.promoContainer}
-
-               ></View>
+               <View style={styles.promoContainer}></View>
                <View style={styles.pricesContainer}>
                   <View style={styles.price}>
                      <Text style={styles.label}>Total</Text>
@@ -144,10 +142,13 @@ const PanierScreen = () => {
                         button: {
                            width: "90%",
                            backgroundColor: "#64A962",
-                           borderRadius:13
+                           borderRadius: 13,
+                           paddingVertical: 10,
+                           alignItems: "center",
+                           justifyContent: "center",
                         },
                         text: {
-                           color: "black",
+                           color: "white",
                            fontSize: 20,
                         },
                      }}
@@ -155,7 +156,7 @@ const PanierScreen = () => {
                </View>
             </>
          ) : (
-            <Text style={styles.panierText}>votre panier est vide</Text>
+            <Text style={styles.emptyPanierText}>Votre panier est vide</Text>
          )}
       </SafeAreaView>
    );
@@ -163,10 +164,6 @@ const PanierScreen = () => {
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1,
-      backgroundColor: "white",
-   },
-   listContainer: {
       flex: 1,
       backgroundColor: "white",
    },
@@ -182,7 +179,7 @@ const styles = StyleSheet.create({
       padding: 30,
       marginVertical: 10,
       width: "90%",
-      alignSelf:"center"
+      alignSelf: "center",
    },
    price: {
       flexDirection: "row",
@@ -197,15 +194,17 @@ const styles = StyleSheet.create({
       fontSize: 20,
       textAlign: "right",
    },
-   priceValue: {
-      fontWeight: "bold",
-      color: "green",
-   },
    panierText: {
       fontSize: 35,
       color: "green",
       textAlign: "center",
-      marginTop:50
+      marginTop: 50,
+   },
+   emptyPanierText: {
+      fontSize: 20,
+      color: "grey",
+      textAlign: "center",
+      marginTop: 50,
    },
    productContainer: {
       flexDirection: "row",
@@ -252,7 +251,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: "black",
       marginTop: 50,
-
    },
    quantityControls: {
       flexDirection: "row",
@@ -273,7 +271,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: "#64A962",
       fontWeight: "bold",
-
    },
    quantityText: {
       marginHorizontal: 20,
@@ -283,7 +280,7 @@ const styles = StyleSheet.create({
    removeButton: {
       fontSize: 20,
       color: "grey",
-      marginRight:10
+      marginRight: 10,
    },
 });
 
