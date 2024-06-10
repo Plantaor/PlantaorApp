@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import HeaderComponent from '../components/HeaderComponent';
-import ProductList from '../components/ProductList';
 import ListProduct from './ListProduct';
 
 const StoreScreen = () => {
@@ -12,7 +11,8 @@ const StoreScreen = () => {
       <Image
         source={require("../assets/imagetore.png")}
         resizeMode="contain"
-        style={{ width: "100%", height: "50%" }} />
+        style={styles.bannerImage}
+      />
 
       <View style={styles.listContainer}>
         <ListProduct />
@@ -26,15 +26,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  listContainer: {
-    flex: 1,
-    padding: 20,
-  },
   header: {
     width: '100%',
-    height: '40%',
-    color: 'black'
-  }
-})
+    height: '40%', // Adjust height as needed
+  },
+  bannerImage: {
+    width: '100%',
+    height: 190, // Adjust height as needed to fit the banner image
+  },
+  listContainer: {
+    flex: 1,
+    padding: 10,
+  },
+});
 
 export default StoreScreen;

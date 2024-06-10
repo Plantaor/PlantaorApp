@@ -8,7 +8,11 @@ const ListProduct = () => {
         { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/images/sex-boost.png') },
         { id: 2, name: "Neuro-calm", price: 24.99, image: require('../assets/images/neuro-calm.jpg') },
         { id: 3, name: "Immuno-T", price: 24.99, image: require('../assets/images/immuni-t.jpg') },
-        { id: 4, name: "Transit", price: 24.99, image: require('../assets/images/Transit.jpg') },
+        { id: 4, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
+        { id: 5, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
+        { id: 6, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
+        { id: 7, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
+        { id: 8, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
     ];
 
     const renderItem = ({ item }) => (
@@ -54,13 +58,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 10,
-        width: 147,
-        height: 126,
+        width: 157,
+        height: 146,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.5,
         shadowRadius: 3,
-        borderWidth: 2,
+        borderWidth: 0.1,
         borderColor: 'black',
     },
     imageContainer: {

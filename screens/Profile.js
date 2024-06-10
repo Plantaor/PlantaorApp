@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         height: 125,
         borderRadius: 100,
         marginTop: 40,
+        marginLeft: 10,
     },
     profileName: {
         fontSize: 30,
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     setting: {
-        marginTop: 1,
+        marginTop: 5,
     },
     legal: {
         marginTop: 1,
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     arrow: {
         width: 19,
         height: 18,
+        // marginLeft: 20,
     },
     optionContainer: {
         flexDirection: 'row',
@@ -134,7 +136,8 @@ const styles = StyleSheet.create({
     optionIcon: {
         width: 30,
         height: 30,
-        marginRight: 10,
+        marginLeft: 20,
+        marginRight: 20,
     },
     optionText: {
         fontSize: 18,
