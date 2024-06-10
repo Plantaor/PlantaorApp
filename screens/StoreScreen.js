@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import HeaderComponent from '../components/HeaderComponent';
-import ProductList from '../components/ProductList';
 import ListProduct from './ListProduct';
 
 const StoreScreen = () => {
@@ -28,13 +27,8 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    padding: 20,
+    padding: 10,
   },
-  header: {
-    width: '100%',
-    height: '40%',
-    color: 'black'
-  }
-})
+});
 
 export default StoreScreen;

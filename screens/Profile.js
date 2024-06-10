@@ -77,15 +77,17 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 125,
         height: 125,
-        borderRadius: 100,
+        borderRadius: 100, // Half of the width/height to make it a perfect circle
         marginTop: 40,
+        marginLeft: 10,
     },
     profileName: {
         fontSize: 30,
         marginLeft: 15,
-        flex: 1,
+        flex: 1, // Allows the name to take up all the space it needs
         marginTop: 60,
-        color: '#000000',
+        color: '#000000', // Text color set to black
+
     },
     Imagefleche: {
         marginTop: 70,
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     setting: {
-        marginTop: 1,
+        marginTop: 5,
     },
     legal: {
         marginTop: 1,
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
     arrow: {
         width: 19,
         height: 18,
+        // marginLeft: 20,
     },
     optionContainer: {
         flexDirection: 'row',
@@ -134,7 +137,8 @@ const styles = StyleSheet.create({
     optionIcon: {
         width: 30,
         height: 30,
-        marginRight: 10,
+        marginLeft: 20,
+        marginRight: 20,
     },
     optionText: {
         fontSize: 18,
