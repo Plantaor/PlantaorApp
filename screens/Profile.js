@@ -77,17 +77,15 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 125,
         height: 125,
-        borderRadius: 100, // Half of the width/height to make it a perfect circle
+        borderRadius: 100,
         marginTop: 40,
-        marginLeft: 10,
     },
     profileName: {
         fontSize: 30,
         marginLeft: 15,
-        flex: 1, // Allows the name to take up all the space it needs
+        flex: 1,
         marginTop: 60,
-        color: '#000000', // Text color set to black
-
+        color: '#000000',
     },
     Imagefleche: {
         marginTop: 70,
