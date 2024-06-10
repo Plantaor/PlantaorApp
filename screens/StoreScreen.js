@@ -11,12 +11,8 @@ const StoreScreen = () => {
       <Image
         source={require("../assets/imagetore.png")}
         resizeMode="contain"
-<<<<<<< HEAD
-        style={{ width: "100%", height: "50%" }} />
-=======
         style={styles.bannerImage}
       />
->>>>>>> 5bfec74f2b732f6d4bdf6b21966872189d6e6d35
 
       <View style={styles.listContainer}>
         <ListProduct />
