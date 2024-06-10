@@ -44,7 +44,7 @@ const ProfileScreen = ({ navigation }) => {
                     </TouchableOpacity>
                     <View style={styles.separator} />
                 </View>
-                <View style={styles.Legal}>
+                <View style={styles.legal}>
                     <Text style={[styles.sectionTitle, styles.boldText]}>Legal</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('TermOflegal')} style={styles.optionContainer}>
                         <Image source={require('../assets/icons/terms_service.jpg')} style={styles.optionIcon} />
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#FFFFFF', // Set background color to white
+        backgroundColor: '#FFFFFF',
     },
     profileContainer: {
         flexDirection: 'row',
@@ -77,17 +77,15 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 125,
         height: 125,
-        borderRadius: 100, // Half of the width/height to make it a perfect circle
+        borderRadius: 100,
         marginTop: 40,
-        marginLeft: 10,
     },
     profileName: {
         fontSize: 30,
         marginLeft: 15,
-        flex: 1, // Allows the name to take up all the space it needs
+        flex: 1,
         marginTop: 60,
-        color: '#000000', // Text color set to black
-
+        color: '#000000',
     },
     Imagefleche: {
         marginTop: 70,
@@ -97,7 +95,6 @@ const styles = StyleSheet.create({
     arrowIcon: {
         width: 19,
         height: 18,
-        marginTop: 20,
     },
     container2: {
         flex: 2,
@@ -106,15 +103,14 @@ const styles = StyleSheet.create({
     setting: {
         marginTop: 5,
     },
-    Legal: {
+    legal: {
         marginTop: 1,
     },
     sectionTitle: {
         fontSize: 25,
         marginBottom: 1,
-        color: '#000000', // Text color set to black
+        color: '#000000',
         padding: 10,
-
     },
     boldText: {
         fontWeight: 'bold',
@@ -125,7 +121,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         flex: 1,
         color: '#000000',
-
     },
     arrow: {
         width: 19,
@@ -146,8 +141,7 @@ const styles = StyleSheet.create({
     optionText: {
         fontSize: 18,
         flex: 1,
-        color: '#000000', // Text color set to black
-
+        color: '#000000',
     },
     separator: {
         height: 1,
