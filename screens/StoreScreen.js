@@ -26,10 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  header: {
-    width: '100%',
-    height: '40%', // Adjust height as needed
-  },
+  
   bannerImage: {
     width: '100%',
     height: 190, // Adjust height as needed to fit the banner image
