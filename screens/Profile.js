@@ -1,97 +1,154 @@
 import React from "react";
-import{View, Text, StyleSheet,SafeAreaView, TouchableOpacity,Image} from "react-native"
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image } from "react-native";
 
-const ProfileScreen =(({navigation})=>{
-return(
-    <SafeAreaView style={styles.container}>
-        <Text style={styles.ProfileText}>Profile </Text>
-        <View style={styles.container2}>
-        <View style={styles.setting}>
-            <Text style={{fontSize:25,fontWeight:500, margin:-20,top:-20}}>Reglages</Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('personalInf')} style={styles.perso}>
-                <Text style={{fontSize:20,}}>Person information</Text>
-                <Image source={require('../assets/icons/fleche.png')}/>
+const ProfileScreen = ({ navigation }) => {
+    return (
+        <SafeAreaView style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.profileContainer}>
+                <Image
+                    source={require('../assets/images/femme-medecin.png')}
+                    style={styles.profileImage}
+                />
+                <Text style={styles.profileName}>Agnes</Text>
+                <Image
+                    source={require('../assets/icons/fleche.png')}
+                    style={styles.Imagefleche}
+                />
             </TouchableOpacity>
-        
-            <TouchableOpacity onPress={()=>navigation.navigate('LoginSecurity')} style={styles.perso}>
-                <Text style={{fontSize:20,}}>Login and security</Text>
-                <Image source={require('../assets/icons/fleche.png')}/>
-            </TouchableOpacity>
-           
-            <TouchableOpacity style={styles.perso} onPress={()=>navigation.navigate('payment')}>
-                <Text style={{fontSize:20,}}>Payment and payouts</Text>
-                <Image source={require('../assets/icons/fleche.png')}/>          
-            </TouchableOpacity>
-          
-            <TouchableOpacity onPress={()=>navigation.navigate('HistoriCommande')} style={styles.perso}>
-                <Text style={{fontSize:20,}}>Historiques des commandes</Text>
-                <Image source={require('../assets/icons/fleche.png')}/>
-            </TouchableOpacity>
-           
-        </View>
-        <View style={styles.Legal}>
-            <Text style={{fontSize:25,fontWeight:500, margin:-20,top:-20}}>Legal</Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('TermOflegal')} style={styles.legalContent}>
-                <Text style={{fontSize:20,}}>Terms of service</Text>
-                <Image source={require('../assets/icons/fleche.png')}/>
-            </TouchableOpacity>
-           
-            <TouchableOpacity onPress={()=>navigation.navigate('personalInf')} style={styles.legalContent}>
-                <Text style={{fontSize:20,}}>Private policy</Text>
-                <Image source={require('../assets/icons/fleche.png')}/>
-            </TouchableOpacity>
-          
-        </View>
-        </View>
-    </SafeAreaView>
-)
-})
+            <View style={styles.separator} />
+            <View style={styles.container2}>
+                <View style={styles.setting}>
+                    <Text style={[styles.sectionTitle, styles.boldText]}>Réglages</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.optionContainer}>
+                        <Image source={require('../assets/icons/profil.png')} style={styles.optionIcon} />
+                        <Text style={styles.optionText}>Personal information</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                    <TouchableOpacity onPress={() => navigation.navigate('LoginSecurity')} style={styles.optionContainer}>
+                        <Image source={require('../assets/icons/paiement-securise.jpg')} style={styles.optionIcon} />
+                        <Text style={styles.optionText}>Login and security</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                    <TouchableOpacity onPress={() => navigation.navigate('payment')} style={styles.optionContainer}>
+                        <Image source={require('../assets/icons/credit-card.png')} style={styles.optionIcon} />
+                        <Text style={styles.optionText}>Modalité de paiement</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                    <TouchableOpacity onPress={() => navigation.navigate('HistoriCommande')} style={styles.optionContainer}>
+                        <Image source={require('../assets/icons/transaction-history.jpg')} style={styles.optionIcon} />
+                        <Text style={styles.optionText}>Historiques commandes</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                </View>
+                <View style={styles.legal}>
+                    <Text style={[styles.sectionTitle, styles.boldText]}>Legal</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('TermOflegal')} style={styles.optionContainer}>
+                        <Image source={require('../assets/icons/terms_service.jpg')} style={styles.optionIcon} />
+                        <Text style={styles.optionText}>Terms of service</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                    <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.optionContainer}>
+                        <Text style={styles.optionTextPolicy}>Privacy policy</Text>
+                        <Image source={require('../assets/icons/fleche.png')} style={styles.arrow} />
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
+                </View>
+            </View>
+        </SafeAreaView>
+    );
+};
 
-const styles=StyleSheet.create({
-    container:{
-        flex:1,
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
         padding: 20,
-        margin:50,
+        backgroundColor: '#FFFFFF',
     },
-    container2:{
-        top:20,
-        flex:2,
-        justifyContent:'space-around'
+    profileContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
     },
-    setting:{
-        /* backgroundColor:'green', */
-        top:80,
-        height:'50%',
-        justifyContent:'space-around'
-        
+    profileImage: {
+        width: 125,
+        height: 125,
+        borderRadius: 100,
+        marginTop: 40,
     },
-    Legal:{
-        /* backgroundColor:'blue', */
-        top:40,
-        justifyContent:'space-around'
+    profileName: {
+        fontSize: 30,
+        marginLeft: 15,
+        flex: 1,
+        marginTop: 60,
+        color: '#000000',
     },
-    legalContent:{
-        height:'13%',
-        flexDirection:'row',
-       justifyContent:'space-between',
-       alignItems:'flex-start'
+    Imagefleche: {
+        marginTop: 70,
+        width: 24,
+        height: 24,
     },
-    ProfileText:{
-        fontSize:30,
-        color:"green",
-        textAlign:'left',
+    arrowIcon: {
+        width: 19,
+        height: 18,
     },
-    perso:{
-       flexDirection:'row',
-       justifyContent:'space-between',
-       alignItems:'flex-start'
+    container2: {
+        flex: 2,
+        justifyContent: 'space-around',
     },
-    LineViewlayout:{
-      height:1,
-      width:'100%',
-      borderStyle:"solid",
-      top:-10, 
-      backgroundColor:'black'
+    setting: {
+        marginTop: 5,
     },
-})
+    legal: {
+        marginTop: 1,
+    },
+    sectionTitle: {
+        fontSize: 25,
+        marginBottom: 1,
+        color: '#000000',
+        padding: 10,
+    },
+    boldText: {
+        fontWeight: 'bold',
+        fontSize: 25,
+    },
+    optionTextPolicy: {
+        marginLeft: 55,
+        fontSize: 18,
+        flex: 1,
+        color: '#000000',
+    },
+    arrow: {
+        width: 19,
+        height: 18,
+        // marginLeft: 20,
+    },
+    optionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+    },
+    optionIcon: {
+        width: 30,
+        height: 30,
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    optionText: {
+        fontSize: 18,
+        flex: 1,
+        color: '#000000',
+    },
+    separator: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#E0E0E0',
+        marginTop: 1,
+    },
+});
+
 export default ProfileScreen;
