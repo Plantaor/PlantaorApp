@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
    View,
    Text,
@@ -50,7 +51,7 @@ const PanierScreen = () => {
       console.log(productId);
    };
 
-   const removeProduct = (productId) => {
+  const removeProduct = (productId) => {
       setPanierProductsList((prevFavoriteList) =>
          prevFavoriteList.filter((product) => product.productId !== productId)
       );

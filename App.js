@@ -17,6 +17,7 @@ import Loginandsecurity from './screens/Loginandsecurity';
 import PaymentScreen from './screens/PaymentScreen';
 import HisrotiCommande from './screens/HisrotiCommande';
 import TermsOflegal from './screens/TermsOflegal';
+import DetailsProduct from './screens/DetailsProduct';
 
 TermsOflegal
 const Stack =createStackNavigator();
@@ -82,6 +83,8 @@ export default function App() {
         <Stack.Screen name="payment" component={PaymentScreen}/>
         <Stack.Screen name ="HistoriCommande" component={HisrotiCommande}/>
         <Stack.Screen name = 'TermOflegal' component={TermsOflegal}/>
+        <Stack.Screen name="productDetail" component={DetailsProduct} />
+
       </Stack.Navigator>
     </NavigationContainer>
     
