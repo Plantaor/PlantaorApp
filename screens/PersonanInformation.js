@@ -6,8 +6,10 @@ const PersonalInformation = ({ navigation }) => {
   const [lastName, setLastName] = useState('Thioub');
   const [password, setPassword] = useState('**********');
   const [phoneNumber, setPhoneNumber] = useState('Provide phone number');
-  const [email, setEmail] = useState('t**6@gmail.com');
+  const [currentEmail, setCurrentEmail] = useState('t**6@gmail.com');
+  const [newEmail, setNewEmail] = useState('');
   const [address, setAddress] = useState('Not provided');
+  const [city, setCity] = useState('Not provided');
   const [editingField, setEditingField] = useState(null);
 
   const handleSave = () => {
@@ -98,22 +100,118 @@ const PersonalInformation = ({ navigation }) => {
           )
           : renderInfoItem('Nom et prénom', 'Nom et prénom', `${firstName} ${lastName}`)}
 
-
         {editingField === 'Mot de passe'
-          ? renderEditField('password', 'Mot de passe', password, setPassword, true)
+          ? (
+            <View style={styles.editContainer}>
+              <View style={styles.editHeader}>
+                <Text style={styles.editLabel}>Mot de passe</Text>
+                <TouchableOpacity onPress={handleCancel} style={styles.cancelButton}>
+                  <Text style={styles.cancelButtonText}>X</Text>
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.editInput}
+                placeholder="Ancien password"
+                secureTextEntry={true}
+              />
+              <TextInput
+                style={styles.editInput}
+                placeholder="Nouveau password"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>Enregistrer</Text>
+              </TouchableOpacity>
+            </View>
+          )
           : renderInfoItem('Mot de passe', 'Mot de passe', password, true)}
 
         {editingField === 'Phone number'
-          ? renderEditField('phoneNumber', 'Phone number', phoneNumber, setPhoneNumber)
-          : renderInfoItem('Phone number', 'Phone number', phoneNumber)}
+          ? (
+            <View style={styles.editContainer}>
+              <View style={styles.editHeader}>
+                <Text style={styles.editLabel}>Numéro de téléphone</Text>
+                <TouchableOpacity onPress={handleCancel} style={styles.cancelButton}>
+                  <Text style={styles.cancelButtonText}>X</Text>
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.editInput}
+                placeholder="Country/Region"
+                value="United States (+1)"
+                editable={false}
+              />
+              <TextInput
+                style={styles.editInput}
+                placeholder="Phone number"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+              />
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>Enregistrer</Text>
+              </TouchableOpacity>
+            </View>
+          )
+          : renderInfoItem('Phone number', 'Numéro de téléphone', phoneNumber)}
 
         {editingField === 'Email'
-          ? renderEditField('email', 'Email', email, setEmail)
-          : renderInfoItem('Email', 'Email', email)}
+          ? (
+            <View style={styles.editContainer}>
+              <View style={styles.editHeader}>
+                <Text style={styles.editLabel}>Email</Text>
+                <TouchableOpacity onPress={handleCancel} style={styles.cancelButton}>
+                  <Text style={styles.cancelButtonText}>X</Text>
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.editInput}
+                placeholder="Ancien email"
+                value={currentEmail}
+                onChangeText={setCurrentEmail}
+                editable={false}
+              />
+              <TextInput
+                style={styles.editInput}
+                placeholder="Nouveau email"
+                value={newEmail}
+                onChangeText={setNewEmail}
+              />
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>Enregistrer</Text>
+              </TouchableOpacity>
+            </View>
+          )
+          : renderInfoItem('Email', 'Email', currentEmail)}
 
         {editingField === 'Address'
-          ? renderEditField('address', 'Address', address, setAddress)
-          : renderInfoItem('Address', 'Address', address)}
+          ? (
+            <View style={styles.editContainer}>
+              <View style={styles.editHeader}>
+                <Text style={styles.editLabel}>Address</Text>
+                <TouchableOpacity onPress={handleCancel} style={styles.cancelButton}>
+                  <Text style={styles.cancelButtonText}>X</Text>
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.editInput}
+                placeholder="Nouvel Address"
+                value={address}
+                onChangeText={setAddress}
+              />
+              <TextInput
+                style={styles.editInput}
+                placeholder="Ville"
+                value={city}
+                onChangeText={setCity}
+              />
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>Enregistrer</Text>
+              </TouchableOpacity>
+            </View>
+          )
+          : renderInfoItem('Address', 'Address', `${address}, ${city}`)}
       </View>
     </View>
   );
