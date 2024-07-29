@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   StatusBar,
+  Platform
 } from "react-native";
 import React from "react";
 import SearchBar from "./SearchBar";
