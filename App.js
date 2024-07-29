@@ -17,6 +17,7 @@ import Loginandsecurity from './screens/Loginandsecurity';
 import PaymentScreen from './screens/PaymentScreen';
 import HisrotiCommande from './screens/HisrotiCommande';
 import TermsOflegal from './screens/TermsOflegal';
+import DetailsProduct from './screens/DetailsProduct';
 
 
 const Stack = createStackNavigator();
