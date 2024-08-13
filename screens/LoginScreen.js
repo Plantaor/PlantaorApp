@@ -1,39 +1,61 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
-import {
-  AppForm,
-  AppFormField,
-  Oauth,
-  SubmitButton,
-} from "../components/forms";
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 
 const LoginScreen = ({ navigation }) => {
-  const [showCodeField, setShowCodeField] = useState(false); // Ajoutez un état pour gérer l'affichage du champ de code
-  const [showBasicFields, setShowBasicFields] = useState(true); // Ajoutez un état pour gérer l'affichage des champs de bas
+  const [showCodeField, setShowCodeField] = useState(false);
+  const [showBasicFields, setShowBasicFields] = useState(true);
+
   const handleUserProPress = () => {
-    setShowCodeField(true); // Changez la valeur de showCodeField à true lorsque UserPro est pressé
-    setShowBasicFields(false); // Cachez les champs de base
+    setShowCodeField(true);
+    setShowBasicFields(false);
   };
+
   const handleUserPress = () => {
-    setShowCodeField(false); // Cachez le champ de code
-    setShowBasicFields(true); // Affichez les champs de base
+    setShowCodeField(false);
+    setShowBasicFields(true);
   };
-  const handleLogin = ({ identifier, password, code }) => {
-    // Implement your login logic here
-    // For demonstration purposes, we'll just log the username and password
-    console.log(
-      "identifier: " +
-        identifier +
-        "" +
-        "\n password: " +
-        password +
-        "\n code: " +
-        code
-    );
-    navigation.navigate("store");
+
+  const handleLogin = async (values) => {
+    const { identifier, password, code } = values;
+
+    try {
+      const response = await axios.post("http://localhost:5001/api/users/login", {
+        email: identifier,
+        password,
+        code,
+      });
+
+      console.log("API Response:", response.data);
+
+      const { token, email, firstName, lastName, role } = response.data;
+
+      if (token && email && firstName && lastName && role) {
+        await AsyncStorage.setItem('userToken', token);
+        await AsyncStorage.setItem('user', JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          role
+        }));
+        Alert.alert("Success", "Logged in successfully!");
+        navigation.navigate("store");
+      } else {
+        throw new Error("Invalid response data");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert(
+        "Error",
+        error.response?.data?.message || "Something went wrong!"
+      );
+    }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.customer}>
@@ -59,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <AppForm
-        initialValues={{ identifier: "example@example.com", password: "asddsa123@", code: "" }}
+        initialValues={{ identifier: "", password: "", code: "" }}
         onSubmit={handleLogin}
         validationSchema={validationSchema}
       >
@@ -69,8 +91,8 @@ const LoginScreen = ({ navigation }) => {
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
-          clearButtonMode="always" // ios clear btn
-          textContentType="emailAddress" //ios autofill
+          clearButtonMode="always"
+          textContentType="emailAddress"
         />
         <AppFormField
           name="password"
@@ -78,16 +100,15 @@ const LoginScreen = ({ navigation }) => {
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry
-          textContentType="password" //ios autofill
+          textContentType="password"
         />
-        {/* TODO: if add this to schema as optional field */}
-        {showCodeField && ( // Affichez le champ de code uniquement si showCodeField est true
+        {showCodeField && (
           <AppFormField
             name="code"
             placeholder="Code"
             autoCapitalize="none"
             autoCorrect={false}
-            clearButtonMode="always" // ios clear btn
+            clearButtonMode="always"
           />
         )}
         <TouchableOpacity>
@@ -100,13 +121,13 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.textConnexion}>Ou se connecter avec</Text>
         <View style={styles.LineViewlayout} />
       </View>
-      <Oauth />
       <TouchableOpacity onPress={() => navigation.navigate("Inscription")}>
         <Text style={styles.nouveauCompte}>je n'ai pas encore de compte ?</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,8 +137,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderStyle: "solid",
     borderColor: "#000",
-    /*     backgroundColor:'blue'
-     */
   },
   textContainer: {
     fontWeight: "bold",
@@ -132,22 +151,18 @@ const styles = StyleSheet.create({
   customer: {
     flexDirection: "row",
     top: 25,
-    /*     justifyContent:'space-between',
-     */
   },
   user: {
     width: "40%",
     height: 170,
-    /*     backgroundColor:'black',
-     */ top: -100,
+    top: -100,
     marginRight: 20,
     borderWidth: 1,
   },
   userPro: {
     width: "40%",
     height: 170,
-    /*     backgroundColor:'black',
-     */ top: -100,
+    top: -100,
     marginRight: 1,
     borderWidth: 1,
   },
@@ -157,7 +172,7 @@ const styles = StyleSheet.create({
     top: 170,
     position: "absolute",
     left: 55,
-  }, 
+  },
   button: {
     backgroundColor: "#266B39",
     paddingVertical: 10,
@@ -185,9 +200,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "green",
     top: 70,
-    // right:10
+  },
+  Mpdoublie: {
+    fontSize: 15,
+    color: "blue",
+    top: 10,
   },
 });
+
 const validationSchema = Yup.object().shape({
   identifier: Yup.string()
     .required("Email ou nom d'utilisateur requis")
@@ -205,4 +225,5 @@ const validationSchema = Yup.object().shape({
     .matches(/^[A-Z0-9]{8}$/, "Code: 8 caractères, majuscules et chiffres.")
     .label("Code abonnement"),
 });
+
 export default LoginScreen;

@@ -6,38 +6,57 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
 import * as Yup from "yup";
+import axios from "axios";
 import {
   AppForm,
   AppFormField,
   Oauth,
   SubmitButton,
+  AppFormPicker,
 } from "../components/forms";
+
 const Inscription = ({ navigation }) => {
-  const handleRegister = ({ email, password, firstName, lastName }) => {
-    // Implement your login logic here
-    // For demonstration purposes, we'll just log the username and password
-    console.log(
-      "email: " +
-        email +
-        "" +
-        "\n password: " +
-        password +
-        "\n firstName: " +
-        firstName +
-        "\n lastName: " +
-        lastName
-    );
-    navigation.navigate("store");
+  const handleRegister = async ({ email, password, firstName, lastName, role }) => {
+    try {
+      const response = await axios.post("http://localhost:5001/api/users", {
+        email,
+        password,
+        firstName,
+        lastName,
+        role,
+      });
+
+      if (response.status === 201) {
+        Alert.alert(
+          "Success",
+          "User registered successfully. Please verify your email."
+        );
+        navigation.navigate("login");
+      }
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        error.response?.data?.message || "Something went wrong!"
+      );
+    }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.banner}>
         <Image source={require("../assets/inscription.png")} />
       </View>
       <AppForm
-        initialValues={{ email: "", password: "", firstName: "", lastName: "" }}
+        initialValues={{
+          email: "",
+          password: "",
+          firstName: "",
+          lastName: "",
+          role: "lambda",
+        }}
         onSubmit={handleRegister}
         validationSchema={validationSchema}
       >
@@ -46,14 +65,12 @@ const Inscription = ({ navigation }) => {
           placeholder="Prénom"
           autoCapitalize="words"
           autoCorrect={false}
-          clearButtonMode="always" // ios clear btn
         />
         <AppFormField
           name="lastName"
           placeholder="Nom"
           autoCapitalize="words"
           autoCorrect={false}
-          clearButtonMode="always" // ios clear btn
         />
         <AppFormField
           name="email"
@@ -61,8 +78,7 @@ const Inscription = ({ navigation }) => {
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
-          clearButtonMode="always" // ios clear btn
-          textContentType="emailAddress" //ios autofill
+          textContentType="emailAddress"
         />
         <AppFormField
           name="password"
@@ -70,9 +86,18 @@ const Inscription = ({ navigation }) => {
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry
-          textContentType="password" //ios autofill
+          textContentType="password"
         />
-        <SubmitButton title="Se connecter" />
+        <AppFormPicker
+          name="role"
+          placeholder="Rôle"
+          items={[
+            { label: "Admin", value: "admin" },
+            { label: "Pharmacist", value: "pharmacist" },
+            { label: "Lambda", value: "lambda" },
+          ]}
+        />
+        <SubmitButton title="S'inscrire" />
       </AppForm>
       <View style={styles.connexion}>
         <View style={styles.LineViewlayout} />
@@ -81,11 +106,12 @@ const Inscription = ({ navigation }) => {
       </View>
       <Oauth />
       <TouchableOpacity onPress={() => navigation.navigate("login")}>
-        <Text style={styles.nouveauCompte}>j'ai deja un compte ?</Text>
+        <Text style={styles.nouveauCompte}>j'ai déjà un compte ?</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -101,7 +127,7 @@ const styles = StyleSheet.create({
   },
   connexion: {
     flexDirection: "row",
-    alignItems: "space-between",
+    alignItems: "center",
     justifyContent: "space-between",
     top: 20,
   },
@@ -122,8 +148,12 @@ const styles = StyleSheet.create({
     right: 85,
   },
 });
+
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required("Email requis").email("Email invalide").label("Email"),
+  email: Yup.string()
+    .required("Email requis")
+    .email("Email invalide")
+    .label("Email"),
   password: Yup.string()
     .required("Mot de passe requis")
     .min(6, "Mot de passe: minimum 6 caractères")
@@ -138,5 +168,10 @@ const validationSchema = Yup.object().shape({
     .min(2, "Nom: minimum 2 caractères")
     .max(50, "Nom: maximum 50 caractères")
     .label("Nom"),
+  role: Yup.string()
+    .required("Rôle requis")
+    .oneOf(["admin", "pharmacist", "lambda"], "Rôle invalide")
+    .label("Rôle"),
 });
+
 export default Inscription;
