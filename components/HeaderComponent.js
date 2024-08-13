@@ -56,11 +56,11 @@ const HeaderComponent = () => {
   );
 };
 const styles = StyleSheet.create({
-  header: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    borderBlockColor: 33,
-    backgroundColor: "white",
-  },
+  // header: {
+  //   // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  //   borderBlockColor: 33,
+  //   backgroundColor: "white",
+  // },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
