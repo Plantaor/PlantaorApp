@@ -32,7 +32,7 @@ const Inscription = ({ navigation }) => {
     navigation.navigate("store");
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.banner}>
         <Image source={require("../assets/inscription.png")} />
       </View>
@@ -83,7 +83,7 @@ const Inscription = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("login")}>
         <Text style={styles.nouveauCompte}>j'ai deja un compte ?</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
