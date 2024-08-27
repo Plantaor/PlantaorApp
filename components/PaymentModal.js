@@ -357,12 +357,12 @@ const styles = StyleSheet.create({
     height: 50, // Ensure enough height
     backgroundColor: "white", // Changed from red for better visibility
     color: "black",
-    ...Platform.select({
-      android: {
-        color: "black",
-        backgroundColor: "transparent",
-      },
-    }),
+    // ...Platform.select({
+    //   android: {
+    //     color: "black",
+    //     backgroundColor: "transparent",
+    //   },
+    // }),
   },
   pickerItem: {
     color: "black", // This is for iOS

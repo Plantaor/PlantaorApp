@@ -21,7 +21,7 @@ import {
 const Inscription = ({ navigation }) => {
   const handleRegister = async ({ email, password, firstName, lastName, role }) => {
     try {
-      const response = await axios.post("http://localhost:5001/api/users", {
+      const response = await axios.post("http://10.0.2.2:5001/api/users", {
         email,
         password,
         firstName,
