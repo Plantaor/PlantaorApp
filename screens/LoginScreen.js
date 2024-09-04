@@ -3,10 +3,13 @@ import { StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import axios from "axios";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import { API_URL } from '@env';
+
 
 const LoginScreen = ({ navigation }) => {
+  console.log(API_URL);
   const [showCodeField, setShowCodeField] = useState(false);
   const [showBasicFields, setShowBasicFields] = useState(true);
 
@@ -24,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
     const { identifier, password, code } = values;
 
     try {
-      const response = await axios.post("http://10.0.2.2:5001/api/users/login", {
+      const response = await axios.post(`${API_URL}/users/login`, {
         email: identifier,
         password,
         code,

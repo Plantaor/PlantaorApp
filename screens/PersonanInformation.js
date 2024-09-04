@@ -1,20 +1,61 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import axios from "axios";
+import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const PersonalInformation = ({ navigation }) => {
-  const [firstName, setFirstName] = useState('Djiby');
-  const [lastName, setLastName] = useState('Thioub');
-  const [password, setPassword] = useState('**********');
-  const [phoneNumber, setPhoneNumber] = useState('Provide phone number');
-  const [currentEmail, setCurrentEmail] = useState('t**6@gmail.com');
-  const [newEmail, setNewEmail] = useState('');
-  const [address, setAddress] = useState('Not provided');
-  const [city, setCity] = useState('Not provided');
-  const [editingField, setEditingField] = useState(null);
 
-  const handleSave = () => {
-    setEditingField(null);
-  };
+
+const PersonalInformation = ({ navigation , route}) => { 
+   const { user } = route.params; // Assurez-vous de passer 'user' via route.params
+
+const [firstName, setFirstName] = useState(user.firstName);
+const [lastName, setLastName] = useState(user.lastName);
+const [password, setPassword] = useState('**********');
+const [oldPassword, setOldPassword] = useState('');
+const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber || 'Provide phone number');
+const [currentEmail, setCurrentEmail] = useState(user.email || 't**6@gmail.com');
+const [newEmail, setNewEmail] = useState('');
+const [address, setAddress] = useState(user.address || 'Not provided');
+const [city, setCity] = useState(user.city || 'Not provided');
+const [editingField, setEditingField] = useState(null);
+
+  
+const handleSave = async () => {
+  try {
+    // Objet contenant les données mises à jour
+    const updatedUser = {
+      firstName,
+      lastName,
+      password: password === '**********' ? undefined : password, // N'envoie pas le mot de passe si non modifié
+      phoneNumber,
+      email: newEmail || currentEmail, // Si l'email a été changé
+      address,
+      city,
+    };
+
+    
+    const token = await AsyncStorage.getItem('userToken'); 
+    // Requête PUT ou PATCH vers votre API avec axios
+    const response = await axios.put(`${API_URL}/users/${token}`, updatedUser, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      // Si la mise à jour est réussie, afficher le succès
+      console.log('Données mises à jour avec succès:', response.data);
+      // Réinitialiser le champ en cours d'édition
+      setEditingField(null);
+      // Optionnel : Mettre à jour l'état de l'utilisateur avec les nouvelles données
+    } else {
+      console.error('Erreur lors de la mise à jour des données');
+    }
+  } catch (error) {
+    console.error('Erreur lors de l\'enregistrement:', error);
+  }
+};
 
   const handleCancel = () => {
     setEditingField(null);
@@ -113,6 +154,8 @@ const PersonalInformation = ({ navigation }) => {
                 style={styles.editInput}
                 placeholder="Ancien password"
                 secureTextEntry={true}
+                value={oldPassword}
+                onChangeText={setOldPassword} // 
               />
               <TextInput
                 style={styles.editInput}

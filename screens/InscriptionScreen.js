@@ -17,11 +17,12 @@ import {
   SubmitButton,
   AppFormPicker,
 } from "../components/forms";
+import { API_URL } from '@env';
 
 const Inscription = ({ navigation }) => {
   const handleRegister = async ({ email, password, firstName, lastName, role }) => {
     try {
-      const response = await axios.post("http://10.0.2.2:5001/api/users", {
+      const response = await axios.post(`${API_URL}/users`, {
         email,
         password,
         firstName,

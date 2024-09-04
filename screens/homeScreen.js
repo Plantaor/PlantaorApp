@@ -19,7 +19,7 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View style={styles.connexion}>
         <Text style={styles.textMembre}>
-          Deja menbre?
+          Déjà membre?
         </Text>
           <TouchableOpacity  
           onPress={()=>navigation.navigate('login')}>

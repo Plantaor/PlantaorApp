@@ -1,41 +1,49 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import AppButton from "../components/AppButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { API_URL } from '@env';
 
-const product = {
-  productId: 3,
-  name: "Immuno-T",
-  price: 24.99,
-  image: require("../assets/images/immuni-t.jpg"),
-  quantity: 1,
-  description:
-    "Les troubles intestinaux sont causés par un mauvais fonctionnement de votre système digestif. La plupart d’entre eux se manifestent dans votre estomac (perte d’appétit, nausées, brûlures, hoquets, ballonnements) .",
-  details: "product Details",
-};
-const DetailsProduct = () => {
+const DetailsProduct = ({route}) => {
+
+  const { product } = route.params; // Recevez les paramètres ici
+  
   const [productDetails, setProductDetails] = useState(product);
   const [showDescription, setShowDescription] = useState(true);
+  const [quantity, setQuantity] = useState(0); // Ajoutez un état pour gérer la quantité
 
   const onPressIncreaseQuantity = () => {
-    setProductDetails({
-      ...productDetails,
-      quantity: productDetails.quantity + 1,
-    });
+    setQuantity(prevQuantity => prevQuantity + 1); // Utilisez setQuantity pour mettre à jour la quantité
   };
 
   const onPressDecreaseQuantity = () => {
-    if (productDetails.quantity > 0) {
-      setProductDetails({
-        ...productDetails,
-        quantity: productDetails.quantity - 1,
-      });
+    if (quantity > 0) {
+      setQuantity(prevQuantity => prevQuantity - 1);
     }
-    return;
   };
 
-  const onPressAdd = () => {
-    console.log("pressed");
-  };
+  const onPressAdd = async () => {
+    try {
+        const token = await AsyncStorage.getItem('userToken'); // Récupère le token utilisateur
+        const productId = productDetails._id; // Utilisez l'ID du produit à partir des détails du produit
+        const quantity = quantity; 
+        console.log("l'id de produit"+productId);
+        const response = await axios.post(`${API_URL}/cart`, {
+            productId,
+            quantity
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}` // Ajoute le token à l'en-tête
+            }
+        });
+
+        console.log('Produit ajouté au panier:', response.data);
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout au panier:', error);
+    }
+};
+
   const onPressGoToCHeckout = () => {
     console.log("pressed to mi");
   };
@@ -69,7 +77,7 @@ const DetailsProduct = () => {
               }}
             />
 
-            <Text style={styles.quantity}>{productDetails.quantity}</Text>
+            <Text style={styles.quantity}>{quantity}</Text>
             <AppButton
               title="+"
               onPress={onPressIncreaseQuantity}
@@ -139,7 +147,7 @@ const DetailsProduct = () => {
         <View style={styles.actionsBtnContainer}>
           <AppButton
             title="+"
-            onPress={onPressGoToCHeckout}
+            onPress={onPressAdd}
             style={{
               button: {
                 width: 50,

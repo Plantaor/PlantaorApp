@@ -1,96 +1,115 @@
-import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
-import { SvgUri } from 'react-native-svg';
+import React, { useState, useEffect } from 'react';
+import {TouchableOpacity, View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const ListProduct = () => {
-    const products = [
-        { id: 1, name: "Sex boost", price: 24.99, image: require('../assets/images/sex-boost.png') },
-        { id: 2, name: "Neuro-calm", price: 24.99, image: require('../assets/images/neuro-calm.jpg') },
-        { id: 3, name: "Immuno-T", price: 24.99, image: require('../assets/images/immuni-t.jpg') },
-        { id: 4, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
-        { id: 5, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
-        { id: 6, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
-        { id: 7, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
-        { id: 8, name: "Transit", price: 24.99, image: require('../assets/images/transit.jpg') },
-    ];
+  // Utilisation de useState pour stocker les produits
+  const [products, setProducts] = useState([]);
 
-    const renderItem = ({ item }) => (
-        <View style={styles.itemContainer}>
-            <View style={styles.item}>
-                <View style={styles.imageContainer}>
-                    {item.image && <Image source={item.image} style={styles.image} />}
-                </View>
-            </View>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>${item.price}</Text>
-        </View>
-    );
+  const navigation = useNavigation(); // Obtenez l'objet navigation
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.get(`${API_URL}/products`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajoute le token à l'en-tête
+          },
+        });
+        // Mettre à jour l'état avec les produits récupérés
+        setProducts(response.data);
+        console.log("les produits retournés sont :", response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={products}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-                numColumns={2}
-            />
-        </View>
-    );
+
+  // Fonction pour rendre chaque élément de la liste
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('DetailsProduct', { product: item })}>
+    <View style={styles.itemContainer}>
+      <View style={styles.item}>
+      <View style={styles.imageContainer}>
+        {item.image && <Image source={item.image} style={styles.image} />}
+      </View>
+
+      </View>
+      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.price}>{item.price}$</Text>
+    </View>
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={item => item._id.toString()} // Utilisation de l'_id comme clé
+        numColumns={2}
+      />
+    </View>
+  );
 };
 
 export default ListProduct;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        padding: 10,
-    },
-    itemContainer: {
-        alignItems: 'center',
-        margin: 10,
-    },
-    item: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 10,
-        width: 157,
-        height: 146,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.5,
-        shadowRadius: 3,
-        borderWidth: 0.1,
-        borderColor: 'black',
-    },
-    imageContainer: {
-        width: 100,
-        height: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        overflow: 'hidden', // Pour s'assurer que l'image ne dépasse pas du cadre
-    },
-    image: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'contain',
-    },
-    name: {
-        fontSize: 16,
-        textAlign: 'center',
-        marginTop: 5,
-        // fontFamily: 'sans-serif',
-    },
-    price: {
-        fontSize: 14,
-        color: 'gray',
-        textAlign: 'center',
-        marginTop: 2,
-        // fontFamily: 'sans-serif',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+  },
+  itemContainer: {
+    alignItems: 'center',
+    margin: 10,
+  },
+  item: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    width: 157,
+    height: 146,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    borderWidth: 0.1,
+    borderColor: 'black',
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  name: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  price: {
+    fontSize: 14,
+    color: 'gray',
+    textAlign: 'center',
+    marginTop: 2,
+  },
 });

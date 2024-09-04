@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect,useState,useCallback } from "react";
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
+
+import axios from "axios";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
    View,
    Text,
@@ -12,70 +17,138 @@ import {
 } from "react-native";
 import AppButton from "../components/AppButton";
 
-const products = [
-   {
-      productId: 1,
-      name: "Sex boost",
-      price: 24.99,
-      image: require("../assets/images/sex-boost.png"),
-      quantity: 1,
-   },
-   {
-      productId: 2,
-      name: "Neuro-calm",
-      price: 24.99,
-      image: require("../assets/images/neurocalm.png"),
-      quantity: 1,
-   },
-   {
-      productId: 3,
-      name: "Immuno-T",
-      price: 24.99,
-      image: require("../assets/images/immuno-t.png"),
-      quantity: 1,
-   },
-   {
-      productId: 4,
-      name: "Transit",
-      price: 24.99,
-      image: require("../assets/images/transit.jpg"),
+import { API_URL } from '@env';
 
-      quantity: 1,
-   },
-];
+
 
 const PanierScreen = () => {
-   const [panierProductsList, setPanierProductsList] = useState(products);
+   const [panierProductsList, setPanierProductsList] = useState([]);
 
-   const redirectToProduct = (productId) => {
-      console.log(productId);
+  
+   
+      const fetchProducts = async () => {
+         try {
+            
+            const token = await AsyncStorage.getItem('userToken');
+            const response = await axios.get(`${API_URL}/cart`, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            setPanierProductsList(response.data.items);
+            console.log("les produit de ce panier est");
+            console.log(response.data.items);
+         } catch (error) {
+            console.error('Error fetching products:', error);
+         }
+      };
+     
+
+ // Re-fetch products when the screen is focused
+ useFocusEffect(
+   useCallback(() => {
+      fetchProducts();
+   }, [])
+);
+
+
+   // Fonction pour supprimer un produit
+   const removeProduct = async (productId) => {
+      
+      try {
+         const token = await AsyncStorage.getItem('userToken');
+         const response = await axios.delete(`${API_URL}/cart/${productId}`, 
+            {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         
+         setPanierProductsList((prevList) =>
+            prevList.filter((item) => item.product._id !== productId)
+         );
+   
+         fetchProducts();
+      
+      } catch (error) {
+         console.error('Error de supprission:', error);
+      }
+
+
    };
 
-  const removeProduct = (productId) => {
-      setPanierProductsList((prevFavoriteList) =>
-         prevFavoriteList.filter((product) => product.productId !== productId)
+
+   const updatePanier = async (productId, quantity) => {
+      try {
+         const token = await AsyncStorage.getItem('userToken');
+   
+         const response = await axios.put(
+            `${API_URL}/cart`,
+            { productId, quantity },
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
+   
+         console.log("Panier mis à jour:", response.data); // Affiche la réponse pour vérifier si cela fonctionne
+         return response.data; // Vous pouvez retourner les données mises à jour ou les traiter ici
+   
+      } catch (error) {
+         console.error("Erreur lors de la mise à jour du panier:", error);
+      }
+   };
+   
+
+   // Fonction pour augmenter la quantité
+   const handleIncreaseQuantity = (productId,quantity) => {
+      const updatedList = panierProductsList.map((item) =>
+         item.product._id === productId ? { ...item, quantity: item.quantity + 1 } : item
       );
+      setPanierProductsList(updatedList);
+
+      updatePanier(productId,quantity);
+
    };
 
-   const handleIncreaseQuantity = (productId) => {
-      const updatedFavoriteList = panierProductsList.map((p) =>
-         p.productId === productId ? { ...p, quantity: p.quantity + 1 } : p
-      );
-      setPanierProductsList(updatedFavoriteList);
-   };
-
+   // Fonction pour diminuer la quantité
    const handleDecreaseQuantity = (productId, quantity) => {
       if (quantity > 1) {
-         const updatedFavoriteList = panierProductsList.map((p) =>
-            p.productId === productId ? { ...p, quantity: p.quantity - 1 } : p
+         const updatedList = panierProductsList.map((item) =>
+            item.product._id === productId ? { ...item, quantity: item.quantity - 1 } : item
          );
-         setPanierProductsList(updatedFavoriteList);
+         setPanierProductsList(updatedList);
+
+         
+      updatePanier(productId,quantity-1);
       }
+   };
+
+   // Calcul du prix total
+      const PriceTotale = () => {
+      if (!Array.isArray(panierProductsList)) {
+         return 0; // Retourner 0 si ce n'est pas un tableau
+      }
+   
+      return panierProductsList.reduce((total, item) => {
+         return total + (item.product.price * item.quantity);
+      }, 0);
+   };
+   
+ 
+
+   // Calcul du prix total avec la livraison
+   const PriceTotaleFinale = (LivraisonPrice) => {
+      return PriceTotale() + LivraisonPrice;
    };
 
    const handleGoToCheckout = () => {
       console.log("redirect to Checkout");
    };
+
+ 
+
 
    return (
       <SafeAreaView style={styles.container}>
@@ -84,33 +157,31 @@ const PanierScreen = () => {
             <>
                <FlatList
                   data={panierProductsList}
-                  keyExtractor={(item) => item.productId.toString()}
+                  keyExtractor={(item) => item.product._id.toString()}
                   renderItem={({ item }) => (
                      <View style={styles.productContainer}>
                         <View style={styles.imageContainer}>
-                           <Image source={item.image} style={styles.productImage} />
+                           <Image source={{ uri: item.product.image }} style={styles.productImage} />
                         </View>
                         <View style={styles.productDetails}>
                            <View style={styles.productHeader}>
-                              <Text style={styles.productName}>{item.name}</Text>
-                              <TouchableOpacity onPress={() => removeProduct(item.productId)}>
+                              <Text style={styles.productName}>{item.product.name}</Text>
+                              <TouchableOpacity onPress={() => removeProduct(item.product._id)}>
                                  <Text style={styles.removeButton}>X</Text>
                               </TouchableOpacity>
                            </View>
                            <View style={styles.productFooter}>
-                              <Text style={styles.productPrice}>{item.price}€</Text>
+                              <Text style={styles.productPrice}>{item.product.price}€</Text>
                               <View style={styles.quantityControls}>
                                  <TouchableOpacity
-                                    onPress={() =>
-                                       handleDecreaseQuantity(item.productId, item.quantity)
-                                    }
+                                    onPress={() => handleDecreaseQuantity(item.product._id, item.quantity)}
                                     style={styles.quantityButton}
                                  >
                                     <Text style={styles.quantityButtonText}>-</Text>
                                  </TouchableOpacity>
                                  <Text style={styles.quantityText}>{item.quantity}</Text>
                                  <TouchableOpacity
-                                    onPress={() => handleIncreaseQuantity(item.productId)}
+                                    onPress={() => handleIncreaseQuantity(item.product._id, item.quantity)}
                                     style={styles.quantityButton}
                                  >
                                     <Text style={styles.quantityButtonText}>+</Text>
@@ -122,11 +193,10 @@ const PanierScreen = () => {
                   )}
                />
 
-               <View style={styles.promoContainer}></View>
                <View style={styles.pricesContainer}>
                   <View style={styles.price}>
                      <Text style={styles.label}>Total</Text>
-                     <Text style={styles.value}>124,95€</Text>
+                     <Text style={styles.value}>{PriceTotale().toFixed(2)}€</Text>
                   </View>
                   <View style={styles.price}>
                      <Text style={styles.label}>Livraison</Text>
@@ -134,7 +204,7 @@ const PanierScreen = () => {
                   </View>
                   <View style={styles.price}>
                      <Text style={styles.label}>Total</Text>
-                     <Text style={styles.value}>154,94€</Text>
+                     <Text style={styles.value}>{PriceTotaleFinale(29.99).toFixed(2)}€</Text>
                   </View>
                   <AppButton
                      title="PASSER À LA CAISSE"
@@ -162,6 +232,7 @@ const PanierScreen = () => {
       </SafeAreaView>
    );
 };
+
 
 const styles = StyleSheet.create({
    container: {

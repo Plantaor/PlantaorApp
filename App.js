@@ -105,6 +105,8 @@ export default function App() {
           <Stack.Screen name="payment" component={PaymentScreen} />
           <Stack.Screen name="HistoriCommande" component={HisrotiCommande} />
           <Stack.Screen name="TermOflegal" component={TermsOflegal} />
+
+        <Stack.Screen name="DetailsProduct" component={DetailsProduct} />
         </Stack.Navigator>
       </NavigationContainer>
     

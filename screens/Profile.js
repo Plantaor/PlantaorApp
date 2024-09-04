@@ -1,16 +1,59 @@
-import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image } from "react-native";
-
+import React, { useEffect, useState,useCallback } from "react";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image, Animated } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { API_URL } from '@env';
+import { useFocusEffect } from "@react-navigation/native";
 const ProfileScreen = ({ navigation }) => {
+    // Déclarez un état pour stocker les données de l'utilisateur
+    const [user, setUser] = useState(null);
+
+   
+    // Fonction pour récupérer les informations de l'utilisateur
+    const fetchUser = async () => {
+        try {
+            console.log("chargement des données de user");
+            const token = await AsyncStorage.getItem('userToken'); 
+            // Requête à l'API pour obtenir l'utilisateur basé sur le token
+            const response = await axios.get(`${ API_URL }/users/${token}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                 },
+            } );
+            console.log("user récupérer");
+            setUser(response.data); // Stocker les informations utilisateur dans le state
+        } catch (error) {
+            console.log('Erreur lors de la récupération des informations utilisateur:', error);
+        }
+    };
+
+                // Appel de l'API lorsque le composant est monté
+            useFocusEffect(
+                useCallback(() => {
+                    fetchUser();
+                }, [])
+            );
+            
+
+
+   console.log(user);
+   
+
+   
+
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.profileContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('personalInf', { user })} style={styles.profileContainer}>
                 <Image
                     source={require('../assets/images/femme-medecin.png')}
                     style={styles.profileImage}
                 />
-                <Text style={styles.profileName}>Agnes</Text>
-                <Image
+                   
+
+                
+                   <Text style={styles.profileName}>
+                        {user ? `${user.lastName} ${user.firstName}` : "Chargement..."}
+                    </Text><Image
                     source={require('../assets/icons/fleche.png')}
                     style={styles.Imagefleche}
                 />
@@ -19,7 +62,7 @@ const ProfileScreen = ({ navigation }) => {
             <View style={styles.container2}>
                 <View style={styles.setting}>
                     <Text style={[styles.sectionTitle, styles.boldText]}>Réglages</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.optionContainer}>
+                    <TouchableOpacity onPress={() => navigation.navigate('personalInf', { user })} style={styles.optionContainer}>
                         <Image source={require('../assets/icons/profil.png')} style={styles.optionIcon} />
                         <Text style={styles.optionText}>Personal information</Text>
                         <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
@@ -52,7 +95,7 @@ const ProfileScreen = ({ navigation }) => {
                         <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>
                     <View style={styles.separator} />
-                    <TouchableOpacity onPress={() => navigation.navigate('personalInf')} style={styles.optionContainer}>
+                    <TouchableOpacity onPress={() =>navigation.navigate('personalInf', { user })} style={styles.optionContainer}>
                         <Text style={styles.optionTextPolicy}>Privacy policy</Text>
                         <Image source={require('../assets/icons/fleche.png')} style={styles.arrow} />
                     </TouchableOpacity>
@@ -125,7 +168,6 @@ const styles = StyleSheet.create({
     arrow: {
         width: 19,
         height: 18,
-        // marginLeft: 20,
     },
     optionContainer: {
         flexDirection: 'row',
