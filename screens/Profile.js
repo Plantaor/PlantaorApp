@@ -7,8 +7,6 @@ import { useFocusEffect } from "@react-navigation/native";
 const ProfileScreen = ({ navigation }) => {
     // Déclarez un état pour stocker les données de l'utilisateur
     const [user, setUser] = useState(null);
-
-   
     // Fonction pour récupérer les informations de l'utilisateur
     const fetchUser = async () => {
         try {
@@ -80,8 +78,8 @@ const ProfileScreen = ({ navigation }) => {
                         <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>
                     <View style={styles.separator} />
-                    <TouchableOpacity onPress={() => navigation.navigate('HistoriCommande')} style={styles.optionContainer}>
-                        <Image source={require('../assets/icons/transaction-history.jpg')} style={styles.optionIcon} />
+                    <TouchableOpacity onPress={() => navigation.navigate('HistoriCommande', { user })} style={styles.optionContainer}>
+                         <Image source={require('../assets/icons/transaction-history.jpg')} style={styles.optionIcon} />
                         <Text style={styles.optionText}>Historiques commandes</Text>
                         <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
                     </TouchableOpacity>

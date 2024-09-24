@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "PlantaorApp",
-    "slug": "PlantaorApp",
+    "slug": "plantaorapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "jsEngine":"hermes",
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -26,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "79c5397b-8316-46dd-9a6e-829e277118fe"
+      }
+    },
+    "owner": "ily_rmkd"
   }
 }

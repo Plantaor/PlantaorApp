@@ -16,19 +16,16 @@ import {
    TouchableOpacity,
 } from "react-native";
 import AppButton from "../components/AppButton";
-
 import { API_URL } from '@env';
 
 
 
 const PanierScreen = () => {
    const [panierProductsList, setPanierProductsList] = useState([]);
-
-  
-   
+   const navigation = useNavigation();
       const fetchProducts = async () => {
          try {
-            
+            console.log("retourne les produits");
             const token = await AsyncStorage.getItem('userToken');
             const response = await axios.get(`${API_URL}/cart`, {
                headers: {
@@ -37,9 +34,8 @@ const PanierScreen = () => {
             });
             setPanierProductsList(response.data.items);
             console.log("les produit de ce panier est");
-            console.log(response.data.items);
          } catch (error) {
-            console.error('Error fetching products:', error);
+            console.error('Error fetching products de panier:', error);
          }
       };
      
@@ -144,9 +140,8 @@ const PanierScreen = () => {
    };
 
    const handleGoToCheckout = () => {
-      console.log("redirect to Checkout");
+      navigation.navigate('payment');
    };
-
  
 
 

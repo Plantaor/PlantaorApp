@@ -4,15 +4,15 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
 import { useNavigation } from '@react-navigation/native';
-
-
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const ListProduct = () => {
   // Utilisation de useState pour stocker les produits
   const [products, setProducts] = useState([]);
 
   const navigation = useNavigation(); // Obtenez l'objet navigation
-  useEffect(() => {
+ 
     const fetchProducts = async () => {
       try {
         const token = await AsyncStorage.getItem('userToken');
@@ -23,13 +23,14 @@ const ListProduct = () => {
         });
         // Mettre à jour l'état avec les produits récupérés
         setProducts(response.data);
-        console.log("les produits retournés sont :", response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-    fetchProducts();
-  }, []);
+    useFocusEffect(
+      useCallback(() => {
+         fetchProducts();
+      }, []));
 
 
   // Fonction pour rendre chaque élément de la liste
@@ -38,7 +39,10 @@ const ListProduct = () => {
     <View style={styles.itemContainer}>
       <View style={styles.item}>
       <View style={styles.imageContainer}>
-        {item.image && <Image source={item.image} style={styles.image} />}
+        <Image
+          source={{ uri: item.images[0] }}  // Affiche la première image du produit
+          style={styles.image} 
+        />
       </View>
 
       </View>

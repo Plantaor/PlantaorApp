@@ -6,7 +6,68 @@ import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import { API_URL } from '@env';
+import * as Notifications from 'expo-notifications';
 
+// Fonction pour demander la permission et obtenir le token de notification
+const registerForPushNotificationsAsync = async () => {
+  let token;
+
+  // Demander la permission pour les notifications
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    alert('Failed to get push token for push notification!');
+    return;
+  }
+
+  try {
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log("Push Token:", token);
+    return token;
+  } catch (error) {
+    console.error('Error fetching Expo push token:', error);
+    return null;
+  }
+};
+
+
+// Fonction pour sauvegarder le token de notification dans le backend
+const savePushTokenToBackend = async (deviceToken, authToken) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/users/device-token`, // Assurez-vous que l'URL correspond à votre backend
+      {
+        token: authToken,     // Le token d'authentification JWT
+        deviceToken: deviceToken,  // Le token de notification
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,  // Le token d'authentification dans les headers
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      console.log('Device token saved successfully');
+    } else {
+      console.error('Failed to save device token:', response.data);
+    }
+  } catch (error) {
+    if (error.response) {
+      console.error('Error saving device token:', error.response.data);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error in request setup:', error.message);
+    }
+  }
+};
 
 const LoginScreen = ({ navigation }) => {
   console.log(API_URL);
@@ -23,6 +84,8 @@ const LoginScreen = ({ navigation }) => {
     setShowBasicFields(true);
   };
 
+ 
+  
   const handleLogin = async (values) => {
     const { identifier, password, code } = values;
 
@@ -37,6 +100,7 @@ const LoginScreen = ({ navigation }) => {
 
       const { token, email, firstName, lastName, role } = response.data;
 
+      console.log(token);
       if (token && email && firstName && lastName && role) {
         await AsyncStorage.setItem('userToken', token);
         await AsyncStorage.setItem('user', JSON.stringify({
@@ -45,6 +109,12 @@ const LoginScreen = ({ navigation }) => {
           lastName,
           role
         }));
+        // Obtenir le token de notification
+        const pushToken = await registerForPushNotificationsAsync();
+        if (pushToken) {
+          // Enregistrer le token dans le backend
+          await savePushTokenToBackend(pushToken, token);
+        }
         Alert.alert("Success", "Logged in successfully!");
         navigation.navigate("store");
       } else {

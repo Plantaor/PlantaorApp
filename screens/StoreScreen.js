@@ -1,9 +1,12 @@
-import React from 'react';
-import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Image, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import HeaderComponent from '../components/HeaderComponent';
 import ListProduct from './ListProduct';
 
 const StoreScreen = () => {
+
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderComponent style={styles.header} />
@@ -20,9 +23,9 @@ const StoreScreen = () => {
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
+    marginTop:20,
     flex: 1,
     backgroundColor: '#FFFFFF',
   },

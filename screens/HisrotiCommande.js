@@ -1,17 +1,107 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
+import { useEffect, useState, useCallback } from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { API_URL } from '@env';
+import RNPickerSelect from 'react-native-picker-select';
+import moment from 'moment'; // Utilisation de moment.js pour manipuler les dates
 
-const HistoriqueCommande = ({ navigation }) => {
+const HistoriqueCommande = ({ navigation, route }) => {
+  const [enCoursCommand, setEnCoursCount] = useState([]);
+  const [confirmeCommand, setConfirmeCount] = useState([]);
+  const [annuleeCommand, setAnnuleeCount] = useState([]);
+  const [Allcommands, setCommands] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [selectedTime, setSelectedTime] = useState('this_month'); // Filtre de temps
+
+  const fetchCommands = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await axios.get(`${API_URL}/orders/myorders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCommands(response.data);
+      console.log("les commendes sont retouner");
+      const enCours = response.data.filter(cmd => cmd.isPaid && !cmd.isDelivered);
+      const confirmees = response.data.filter(cmd => cmd.isPaid && cmd.isDelivered);
+      const annulees = response.data.filter(cmd => !cmd.isPaid);
+      
+      setEnCoursCount(enCours);
+      setConfirmeCount(confirmees);
+      setAnnuleeCount(annulees);
+    } catch (error) {
+      console.log('Erreur lors de la récupération des commandes:', error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchCommands();
+    }, [])
+  );
+
+
+
+  const filteredCommands = () => {
+    let filteredByType = [];
+
+    // Filtrer par type de commande (En Cours, Confirmé, Annulées)
+    switch (selectedFilter) {
+      case 'EnCours':
+        filteredByType = enCoursCommand;
+        break;
+      case 'Confirmé':
+        filteredByType = confirmeCommand;
+        break;
+      case 'Annulées':
+        filteredByType = annuleeCommand;
+        break;
+      default:
+        filteredByType = Allcommands;
+    }
+
+    // Ensuite, filtrer par temps (ce mois-ci, le mois dernier, etc.)
+    return filteredByType;
+  };
+
+  const renderCommand = ({ item }) => {
+    let cardStyle = styles.card;
+    if (item.isPaid && !item.isDelivered) {
+      cardStyle = { ...styles.card, ...styles.cardInProgress };
+    } else if (item.isPaid && item.isDelivered) {
+      cardStyle = { ...styles.card, ...styles.cardConfirmed };
+    } else if (!item.isPaid) {
+      cardStyle = { ...styles.card, ...styles.cardCancelled };
+    }
+
+    return (
+      <View style={cardStyle}>
+        <View style={styles.cardContent}>
+          <View style={styles.cardNumberContainer}>
+            <Text style={styles.cardNumber}>P-{item._id.substring(0, 8)}</Text>
+          </View>
+          <View style={{ marginLeft: 15 }}>
+            <Text style={styles.cardTitle}>Type: {item.isPaid && item.isDelivered ? "Confirmé" : "En Cours"}</Text>
+            <Text>Transport: {item.shippingAddress.city}</Text>
+            <Text>Nombre des produits: {item.orderItems.length}</Text>
+            <Text>Statut: {item.isDelivered ? "Livrée" : "Non Livrée"}</Text>
+            <Text>Paiement: {item.isPaid ? "Payée" : "Non Payée"}</Text>
+            <Text>Méthode de Paiement: {item.paymentMethod}</Text>
+            <Text>Prix Total: ${item.totalPrice}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <View style={styles.iconContainer}>
-            <Image
-              source={require('../assets/icons/flecheretour.jpg')}
-              style={styles.backIcon}
-            />
+            <Image source={require('../assets/icons/flecheretour.jpg')} style={styles.backIcon} />
           </View>
           <Text style={styles.subHeader}>Historiques commande</Text>
         </TouchableOpacity>
@@ -19,67 +109,35 @@ const HistoriqueCommande = ({ navigation }) => {
       <View style={styles.titleRow}>
         <Text style={styles.headerTitle}>Historiques commande</Text>
         <View style={styles.lastMonthContainer}>
-          <Text style={styles.lastMonth}>last month</Text>
-          <TouchableOpacity style={styles.dropdownButton}>
-            <Ionicons name="chevron-down" size={20} color="black" />
-          </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.filters}>
-        <TouchableOpacity style={[styles.filterButton, styles.filterButtonActive]}>
-          <Text style={[styles.filterText, styles.filterTextActive]}>All(22)</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.filterText}>En cours(15)</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.filterText}>Confirmé(03)</Text>
-        </TouchableOpacity>
+        {/* Boutons de filtre */}
       </View>
 
-      <View style={[styles.card, styles.cardConfirmed]}>
-        <ImageBackground source={require('../assets/inscription.png')} style={styles.cardImage} imageStyle={styles.cardImageStyle}>
-          <View style={styles.overlay} />
-          <Text style={styles.cardTitle}>Confirmé</Text>
-          <View style={styles.cardContent}>
-            <View style={styles.cardNumberContainer}>
-              <Text style={styles.cardNumber}>04</Text>
-            </View>
-          </View>
-        </ImageBackground>
-      </View>
-
-      <View style={[styles.card, styles.cardInProgress]}>
-        <ImageBackground source={require('../assets/inscription.png')} style={styles.cardImage} imageStyle={styles.cardImageStyle}>
-          <View style={styles.overlay} />
-          <Text style={styles.cardTitle}>En cours</Text>
-          <View style={styles.cardContent}>
-            <View style={styles.cardNumberContainer}>
-              <Text style={styles.cardNumber}>15</Text>
-            </View>
-          </View>
-        </ImageBackground>
-      </View>
-
-      <View style={[styles.card, styles.cardCancelled]}>
-        <ImageBackground source={require('../assets/inscription.png')} style={styles.cardImage} imageStyle={styles.cardImageStyle}>
-          <View style={styles.overlay} />
-          <Text style={styles.cardTitle}>Annulées</Text>
-          <View style={styles.cardContent}>
-            <View style={styles.cardNumberContainer}>
-              <Text style={styles.cardNumber}>03</Text>
-            </View>
-          </View>
-        </ImageBackground>
-      </View>
+      <ScrollView>
+      {filteredCommands().length === 0 ? (
+  <View style={styles.noCommandsContainer}>
+    <Text style={styles.noCommandsText}>Aucune commande à afficher</Text>
+  </View>
+) : (
+  <FlatList
+    data={filteredCommands()}
+    renderItem={renderCommand}
+    keyExtractor={item => item._id}
+  />
+)}
+      </ScrollView>
     </View>
   );
 }
 
 export default HistoriqueCommande;
 
+
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -91,7 +149,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginBottom: 10,
-
   },
   backButton: {
     flexDirection: 'row',
@@ -114,7 +171,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
     color: 'green',
-
   },
   titleRow: {
     flexDirection: 'row',
@@ -126,18 +182,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'black',
+    margin:10,
   },
   lastMonthContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  lastMonth: {
-    fontSize: 14,
-    color: 'gray',
-    marginRight: 5,
-  },
-  dropdownButton: {
-    padding: 5,
+    
   },
   filters: {
     flexDirection: 'row',
@@ -145,17 +195,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   filterButton: {
-    padding: 10,
-    borderRadius: 5,
+    padding: 6,
+    borderRadius: 6,
     backgroundColor: '#fff',
-    borderWidth: 1,
+    borderWidth: 0.1,
     borderColor: 'black',
+    margin: 2,
   },
   filterButtonActive: {
     borderColor: 'green',
   },
   filterText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
     color: 'black',
   },
@@ -163,67 +214,44 @@ const styles = StyleSheet.create({
     color: 'green',
     textAlign: 'center',
     width: 90,
-    height: 15,
+    height: 20,
   },
   card: {
-    marginBottom: 50,
-    borderRadius: 15,
-    overflow: 'hidden',
+    marginBottom: 10,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ddd',
-    width: 343,
-    height: 104,
-
+    padding: 13,
+    backgroundColor: '#fff',
   },
   cardConfirmed: {
     borderColor: 'green',
-    borderWidth: 2,
-    marginTop: 20,
   },
   cardInProgress: {
-    borderColor: 'green',
-    borderWidth: 2,
+    borderColor: 'orange',
   },
   cardCancelled: {
-    borderColor: 'green',
-    borderWidth: 2,
-  },
-  cardImage: {
-    width: '100%',
-    height: 120,
-    justifyContent: 'center',
-  },
-  cardImageStyle: {
-    borderRadius: 10,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderColor: 'red',
   },
   cardContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  cardTitle: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -70 }, { translateY: -50 }],
-    fontSize: 16,
-    color: 'black',
   },
   cardNumberContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
     borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 9,
     borderWidth: 1,
-    borderColor: 'black',
-    opacity: 50,
+    borderColor: '#ccc',
   },
   cardNumber: {
-    fontSize: 28,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  cardTitle: {
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
   },

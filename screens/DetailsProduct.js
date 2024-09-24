@@ -7,8 +7,7 @@ import { API_URL } from '@env';
 
 const DetailsProduct = ({route}) => {
 
-  const { product } = route.params; // Recevez les paramètres ici
-  
+  const { product } = route.params; 
   const [productDetails, setProductDetails] = useState(product);
   const [showDescription, setShowDescription] = useState(true);
   const [quantity, setQuantity] = useState(0); // Ajoutez un état pour gérer la quantité
@@ -37,7 +36,7 @@ const DetailsProduct = ({route}) => {
                 Authorization: `Bearer ${token}` // Ajoute le token à l'en-tête
             }
         });
-
+        alert('Produit ajouté au panier:');
         console.log('Produit ajouté au panier:', response.data);
     } catch (error) {
         console.error('Erreur lors de l\'ajout au panier:', error);
@@ -51,7 +50,10 @@ const DetailsProduct = ({route}) => {
     <View style={styles.container}>
       <Text style={styles.panierText}>Product</Text>
       <View style={styles.imageContainer}>
-        <Image source={product.image} style={styles.image} />
+        <Image
+          source={{ uri: product.images[0] }}  // Affiche la première image du produit
+          style={styles.image} 
+        />
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.detailsText}>{product.name}</Text>
@@ -196,6 +198,7 @@ export default DetailsProduct;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop:30,
     flex: 1,
     alignItems: "center",
     backgroundColor: "white",
@@ -206,19 +209,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   imageContainer: {
-    marginTop: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-    backgroundColor: "#ECECEC", // Set background color for circle
-    width: 200, // Adjust width as needed
-    height: 200, // Adjust height as needed
-    borderRadius: 100, // Set border radius for circle container (optional)
-    overflow: "hidden", // Clip overflowing image content
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginTop:30,
+    marginBottom:10,
   },
   image: {
-    borderRadius: 100, // Set border radius for image
-    height: "80%",
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
   },
   detailsContainer: {
     flex: 1,
