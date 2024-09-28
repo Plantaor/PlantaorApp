@@ -5,8 +5,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { API_URL } from '@env';
-import RNPickerSelect from 'react-native-picker-select';
-import moment from 'moment'; // Utilisation de moment.js pour manipuler les dates
 
 const HistoriqueCommande = ({ navigation, route }) => {
   const [enCoursCommand, setEnCoursCount] = useState([]);
@@ -108,29 +106,52 @@ const HistoriqueCommande = ({ navigation, route }) => {
       </View>
       <View style={styles.titleRow}>
         <Text style={styles.headerTitle}>Historiques commande</Text>
-        <View style={styles.lastMonthContainer}>
-        </View>
       </View>
-
+  
       <View style={styles.filters}>
-        {/* Boutons de filtre */}
+        <TouchableOpacity
+          style={[styles.filterButton, selectedFilter === 'All' && styles.filterButtonActive]}
+          onPress={() => setSelectedFilter('All')}
+        >
+          <Text style={[styles.filterText, selectedFilter === 'All' && styles.filterTextActive]}>Toutes ({Allcommands.length})</Text>
+        </TouchableOpacity>
+  
+        <TouchableOpacity
+          style={[styles.filterButton, selectedFilter === 'EnCours' && styles.filterButtonActive]}
+          onPress={() => setSelectedFilter('EnCours')}
+        >
+          <Text style={[styles.filterText, selectedFilter === 'EnCours' && styles.filterTextActive]}>En Cours ({enCoursCommand.length})</Text>
+        </TouchableOpacity>
+  
+        <TouchableOpacity
+          style={[styles.filterButton, selectedFilter === 'Confirmé' && styles.filterButtonActive]}
+          onPress={() => setSelectedFilter('Confirmé')}
+        >
+          <Text style={[styles.filterText, selectedFilter === 'Confirmé' && styles.filterTextActive]}>Confirmé ({confirmeCommand.length})</Text>
+        </TouchableOpacity>
+  
+        <TouchableOpacity
+          style={[styles.filterButton, selectedFilter === 'Annulées' && styles.filterButtonActive]}
+          onPress={() => setSelectedFilter('Annulées')}
+        >
+          <Text style={[styles.filterText, selectedFilter === 'Annulées' && styles.filterTextActive]}>Annulées ({annuleeCommand.length})</Text>
+        </TouchableOpacity>
       </View>
-
-      <ScrollView>
+  
       {filteredCommands().length === 0 ? (
-  <View style={styles.noCommandsContainer}>
-    <Text style={styles.noCommandsText}>Aucune commande à afficher</Text>
-  </View>
-) : (
-  <FlatList
-    data={filteredCommands()}
-    renderItem={renderCommand}
-    keyExtractor={item => item._id}
-  />
-)}
-      </ScrollView>
+        <View style={styles.noCommandsContainer}>
+          <Text style={styles.noCommandsText}>Aucune commande à afficher</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredCommands()}
+          renderItem={renderCommand}
+          keyExtractor={item => item._id}
+        />
+      )}
     </View>
   );
+  
 }
 
 export default HistoriqueCommande;

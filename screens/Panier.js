@@ -97,16 +97,15 @@ const PanierScreen = () => {
    };
    
 
-   // Fonction pour augmenter la quantité
-   const handleIncreaseQuantity = (productId,quantity) => {
+   const handleIncreaseQuantity = (productId, quantity) => {
       const updatedList = panierProductsList.map((item) =>
          item.product._id === productId ? { ...item, quantity: item.quantity + 1 } : item
       );
       setPanierProductsList(updatedList);
-
-      updatePanier(productId,quantity);
-
+   
+      updatePanier(productId, quantity + 1); // Incrémenter la quantité
    };
+   
 
    // Fonction pour diminuer la quantité
    const handleDecreaseQuantity = (productId, quantity) => {
@@ -117,7 +116,8 @@ const PanierScreen = () => {
          setPanierProductsList(updatedList);
 
          
-      updatePanier(productId,quantity-1);
+         updatePanier(productId, quantity - 1);
+
       }
    };
 

@@ -9,8 +9,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons"; // Make sure to install this package
+import Icon from "react-native-vector-icons/MaterialIcons"; // Assurez-vous d'avoir installé ce package
 import { Picker } from "@react-native-picker/picker";
+import { CardField, useStripe } from '@stripe/stripe-react-native'; // Assurez-vous d'avoir installé Stripe
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const PaymentMethodForm = ({ onClose, onSelectCreditCard, onSelectPaypal }) => {
   return (
@@ -25,7 +29,7 @@ const PaymentMethodForm = ({ onClose, onSelectCreditCard, onSelectPaypal }) => {
       <TouchableWithoutFeedback onPress={onSelectCreditCard}>
         <View style={styles.button1}>
           <Icon name="credit-card" size={24} color="#000" />
-          <Text style={styles.buttonText1}>carte de crédit ou de débit</Text>
+          <Text style={styles.buttonText1}>Carte de crédit ou de débit</Text>
         </View>
       </TouchableWithoutFeedback>
 
@@ -38,13 +42,45 @@ const PaymentMethodForm = ({ onClose, onSelectCreditCard, onSelectPaypal }) => {
     </View>
   );
 };
-const CreditCardForm = ({ onClose, onSubmit }) => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiration, setExpiration] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [postalCode, setPostalCode] = useState("");
 
-  const [country, setCountry] = useState("France");
+const CreditCardForm = ({ onClose, onSubmit }) => {
+  const { createPaymentMethod } = useStripe();
+  const [cardElement, setCardElement] = useState(null);
+  
+  const handlePayment = async () => {
+    // Créer une méthode de paiement Stripe
+    const { paymentMethod, error } = await createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+    });
+
+    if (error) {
+      console.error('Erreur lors de la création de la méthode de paiement:', error);
+      Alert.alert('Erreur', error.message);
+      return;
+    }
+
+    // Envoyer l'ID de la méthode de paiement au backend
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await axios.post('/api/payment-methods', {
+        paymentMethodId: paymentMethod.id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        Alert.alert("Succès", "Méthode de paiement enregistrée avec succès !");
+        onClose();
+      }
+    } catch (err) {
+      console.error('Erreur lors de l\'enregistrement de la méthode de paiement:', err);
+      Alert.alert("Erreur", "Impossible d'enregistrer la méthode de paiement.");
+    }
+  };
 
   return (
     <View style={styles.creditCardFormContainer}>
@@ -57,84 +93,22 @@ const CreditCardForm = ({ onClose, onSubmit }) => {
         </Text>
       </View>
       <View style={styles.creditCardinfo}>
-        <View style={[styles.creditCardInputContainer, styles.input]}>
-          <TextInput
-            style={styles.creditCardInput}
-            placeholder="Numéro de carte"
-            value={cardNumber}
-            onChangeText={setCardNumber}
-            keyboardType="numeric"
-          />
-          <Icon
-            name="credit-card"
-            size={24}
-            color="#000"
-            style={styles.creditCardInputIcon}
-          />
-        </View>
-
-        <View style={[styles.creditCardRow, styles.input]}>
-          <TextInput
-            style={[
-              styles.creditCardInput,
-              styles.creditCardHalfInput,
-              { borderRightWidth: 1, borderColor: "#DBDBDB" },
-            ]}
-            placeholder="Expiration"
-            value={expiration}
-            onChangeText={setExpiration}
-          />
-          <TextInput
-            style={[styles.creditCardInput, styles.creditCardHalfInput]}
-            placeholder="CVV"
-            value={cvv}
-            onChangeText={setCvv}
-            keyboardType="numeric"
-          />
-        </View>
-      </View>
-
-      <View
-        style={[
-          styles.creditCardSelectContainer,
-          styles.input,
-          {
-            padding: 5,
-            borderWidth: 1,
-            borderColor: "#DBDBDB",
-            marginVertical: 10,
-          },
-        ]}
-      >
-        <TextInput
-          style={[styles.creditCardInput]}
-          placeholder="Code postal"
-          value={postalCode}
-          onChangeText={setPostalCode}
-          keyboardType="numeric"
+        <CardField
+          postalCodeEnabled={true}
+          placeholder={{ number: '4242 4242 4242 4242' }}
+          cardStyle={{
+            backgroundColor: '#FFFFFF',
+            textColor: '#000000',
+          }}
+          style={{
+            width: '100%',
+            height: 50,
+            marginVertical: 30,
+          }}
+          onCardChange={(cardDetails) => {
+            setCardElement(cardDetails);
+          }}
         />
-      </View>
-
-      <View style={[styles.creditCardSelectContainer, styles.input,{position:"relative"}]}>
-        <View style={[styles.creditCardPickerContainer,{
-            borderWidth: 1,
-            borderColor: "#DBDBDB",
-            marginVertical: 10,
-          },]}>
-          <Picker
-            selectedValue={country}
-            onValueChange={(itemValue) => setCountry(itemValue)}
-            style={styles.creditCardPicker}
-          >
-            <Picker.Item label="France" value="France" />
-            <Picker.Item label="Belgique" value="Belgique" />
-            <Picker.Item label="Suisse" value="Suisse" />
-            <Picker.Item label="Canada" value="Canada" />
-            {/* Add more countries as needed */}
-          </Picker>
-        </View>
-        <Text style={styles.creditCardSelectLabel}>pays/region</Text>
-
       </View>
 
       <View style={styles.creditCardButtonContainer}>
@@ -146,7 +120,7 @@ const CreditCardForm = ({ onClose, onSubmit }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.creditCardSubmitButton}
-          onPress={onSubmit}
+          onPress={handlePayment}
         >
           <Text style={styles.creditCardButtonText}>Enregistrer</Text>
         </TouchableOpacity>
@@ -154,6 +128,7 @@ const CreditCardForm = ({ onClose, onSubmit }) => {
     </View>
   );
 };
+
 const PaymentModal = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [showSecondForm, setShowSecondForm] = useState(false);
@@ -161,30 +136,20 @@ const PaymentModal = () => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
     if (!isModalVisible) {
-      setShowSecondForm(false); // Reset to first form when opening modal
+      setShowSecondForm(false); // Réinitialiser le formulaire lors de l'ouverture du modal
     }
   };
 
-  const handleShowSecondForm = () => {
-    setShowSecondForm(true);
-  };
-
   const handleSelectCreditCard = () => {
+    console.log("Sélection de la carte de crédit");
     setShowSecondForm(true);
-
-    console.log("Credit card selected");
-    // Implement your logic here
   };
 
   const handleSelectPaypal = () => {
-    console.log("PayPal selected");
-    // Implement your logic here
+    console.log("PayPal sélectionné");
+    // Implémentez votre logique ici pour PayPal
   };
-  const handleSubmitCreditCard = () => {
-    console.log("Credit card submitted");
-    // Implement credit card submission logic here
-    toggleModal();
-  };
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={toggleModal}>
@@ -213,7 +178,6 @@ const PaymentModal = () => {
                 ) : (
                   <CreditCardForm
                     onClose={toggleModal}
-                    onSubmit={handleSubmitCreditCard}
                   />
                 )}
               </View>
@@ -259,26 +223,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginRight: 24,
   },
-  button: {
-    backgroundColor: "#4CAF50",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 10, // Rendre les coins du bouton arrondis
+  button1: {
+    flexDirection: "row",
     alignItems: "center",
-    marginTop: 50, // Espace entre la description et le bouton
-    alignSelf: "center", // Centrer le bouton horizontalement
+    padding: 10,
+    marginVertical: 8,
   },
-  buttonText: {
-    color: "black",
+  buttonText1: {
+    marginLeft: 10,
     fontSize: 16,
-    width: 250,
-    height: 25,
-    textAlign: "center",
   },
   creditCardFormContainer: {
     flex: 1,
     padding: 16,
-    //backgroundColor: "red",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -294,27 +251,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginRight: 24,
   },
-  creditCardInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  creditCardInputIcon: {
-    marginRight: 10,
-  },
-  creditCardInput: {
-    flex: 1,
-    height: 40,
-    color: "#DBDBDB",
-    padding: 10,
-  },
-  creditCardRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  creditCardHalfInput: {
-    width: "48%",
+  creditCardinfo: {
+    marginBottom: 20,
   },
   creditCardButtonContainer: {
     flexDirection: "row",
@@ -339,58 +277,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
   },
-  creditCardSelectLabel: {
-    fontSize: 11,
-    color: "#DBDBDB",
-    position:"absolute",
-    top:10,
-    left:2
-
-  },
-  creditCardPickerContainer: {
-    minWidth: "100%",
-    overflow: "hidden",
-    backgroundColor:"white"
-
-  },
-  creditCardPicker: {
-    height: 50, // Ensure enough height
-    backgroundColor: "white", // Changed from red for better visibility
-    color: "black",
-    // ...Platform.select({
-    //   android: {
-    //     color: "black",
-    //     backgroundColor: "transparent",
-    //   },
-    // }),
-  },
-  pickerItem: {
-    color: "black", // This is for iOS
-  },
-  input: {
-    borderColor: "#DBDBDB",
-    color: "#DBDBDB",
-  },
-  creditCardinfo: {
-    borderWidth: 1,
-    borderColor: "#DBDBDB",
-  },
-  button1: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  buttonText1: {
-    marginLeft: 16,
-    fontSize: 16,
-  },
-  creditCardSelectContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
 });
 
 export default PaymentModal;
+

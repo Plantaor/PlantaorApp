@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, ScrollView, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Button } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect, useNavigation } from '@react-navigation/native'; // Pour la navigation
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { API_URL } from '@env';
 
 const CommandListScreen = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+
   const navigation = useNavigation();
 
   const fetchOrders = async () => {
@@ -19,6 +26,7 @@ const CommandListScreen = () => {
         },
       });
       setOrders(response.data);
+      setFilteredOrders(response.data); // Default: all orders
       setLoading(false);
     } catch (error) {
       console.error('Erreur lors de la récupération des commandes:', error);
@@ -31,6 +39,24 @@ const CommandListScreen = () => {
       fetchOrders();
     }, [])
   );
+
+  const filterByDate = () => {
+    if (startDate && endDate) {
+      const filtered = orders.filter(order => {
+        const orderDate = new Date(order.createdAt);
+        return orderDate >= startDate && orderDate <= endDate;
+      });
+      setFilteredOrders(filtered);
+    } else {
+      setFilteredOrders(orders); // If no dates are selected, show all orders
+    }
+  };
+
+  const resetFilters = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setFilteredOrders(orders);
+  };
 
   const renderCommand = ({ item }) => {
     let cardStyle = styles.card;
@@ -75,23 +101,68 @@ const CommandListScreen = () => {
           <Text style={styles.subHeader}>Liste des commandes</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView>
-        {orders.length === 0 ? (
+
+      {/* Date Pickers */}
+      <View style={styles.datePickerContainer}>
+        <View style={styles.datePicker}>
+          <Button title="Sélectionner Date Début" onPress={() => setShowStartDatePicker(true)} />
+          {startDate && <Text style={styles.selectedDateText}>{startDate.toLocaleDateString()}</Text>}
+        </View>
+
+        <View style={styles.datePicker}>
+          <Button title="Sélectionner Date Fin" onPress={() => setShowEndDatePicker(true)} />
+          {endDate && <Text style={styles.selectedDateText}>{endDate.toLocaleDateString()}</Text>}
+        </View>
+      </View>
+
+      {showStartDatePicker && (
+        <DateTimePicker
+          value={startDate || new Date()}
+          mode="date"
+          display="default"
+          onChange={(event, selectedDate) => {
+            setShowStartDatePicker(false);
+            if (selectedDate) setStartDate(selectedDate);
+          }}
+        />
+      )}
+      
+      {showEndDatePicker && (
+        <DateTimePicker
+          value={endDate || new Date()}
+          mode="date"
+          display="default"
+          onChange={(event, selectedDate) => {
+            setShowEndDatePicker(false);
+            if (selectedDate) setEndDate(selectedDate);
+          }}
+        />
+      )}
+
+      {/* Filter and Reset Buttons */}
+      <View style={styles.filterButtonsContainer}>
+        <TouchableOpacity style={styles.filterButton} onPress={filterByDate}>
+          <Text style={styles.filterButtonText}>Filtrer par date</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.resetButton} onPress={resetFilters}>
+          <Text style={styles.resetButtonText}>X</Text>
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={filteredOrders}
+        renderItem={renderCommand}
+        keyExtractor={(item) => item._id.toString()}
+        ListEmptyComponent={() => (
           <View style={styles.noCommandsContainer}>
             <Text style={styles.noCommandsText}>Aucune commande trouvée</Text>
           </View>
-        ) : (
-          <FlatList
-            data={orders}
-            renderItem={renderCommand}
-            keyExtractor={(item) => item._id.toString()}
-          />
         )}
-      </ScrollView>
+      />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -173,6 +244,47 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
+  },
+  datePickerContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  datePicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  selectedDateText: {
+    fontSize: 16,
+    marginLeft: 10,
+    color: '#000',
+    borderColor:'black',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  filterButtonsContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  filterButton: {
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+  },
+  filterButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  resetButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginLeft:10,
+  },
+  resetButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

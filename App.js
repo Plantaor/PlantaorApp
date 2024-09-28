@@ -28,6 +28,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import CommandListScreen from './screens/CommandList';
 import OrderDetailScreen from './screens/OrderDetailScreen'; // Un écran pour les détails de commande
+import { StripeProvider } from '@stripe/stripe-react-native'; 
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,6 +67,35 @@ function TabNavigator() {
           ),
         }} 
       />
+       {role === 'admin' && ( // Afficher l'onglet "Manage Product" uniquement pour les administrateurs
+        <Tab.Screen 
+          name="Commandes" 
+          component={CommandListScreen} 
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Image
+                source={require('./assets/icons/bon-de-commande.png')}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            ),
+          }} 
+        />)}
+
+
+      {role === 'admin' && ( // Afficher l'onglet "Manage Product" uniquement pour les administrateurs
+        <Tab.Screen 
+          name="Manage" 
+          component={ManageProduct} 
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Image
+                source={require('./assets/icons/gestion.png')}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            ),
+          }} 
+        />)}
+
       <Tab.Screen 
         name="Panier" 
         component={PanierScreen} 
@@ -77,6 +108,9 @@ function TabNavigator() {
           ),
         }} 
       />
+
+
+{(role === 'lambda' || role === 'pharmacist') && (
       <Tab.Screen 
         name="Scan" 
         component={Scan} 
@@ -89,6 +123,7 @@ function TabNavigator() {
           ),
         }} 
       />
+      )}
      {/* Afficher l'onglet "Stock" seulement pour les admins et les pharmacists */}
      {(role === 'admin' || role === 'pharmacist') && (
         <Tab.Screen 
@@ -105,20 +140,6 @@ function TabNavigator() {
         />
       )}
 
-        {role === 'admin' && ( // Afficher l'onglet "Manage Product" uniquement pour les administrateurs
-        <Tab.Screen 
-          name="Manage" 
-          component={ManageProduct} 
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={require('./assets/icons/gestion.png')}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }} 
-        />
-      )}
       <Tab.Screen 
         name="Profile" 
         component={ProfileScreen} 
@@ -163,8 +184,10 @@ useEffect(() => {
   getNotificationPermissions();
 }, []);
   return (
-   
-      <NavigationContainer>
+
+    // <StripeProvider publishableKey="YOUR_PUBLISHABLE_KEY">  // {/* Remplacez par votre clé publique */}
+    
+   <NavigationContainer>
         <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="login" component={LoginScreen} />
@@ -185,6 +208,7 @@ useEffect(() => {
           <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      //</StripeProvider>
     
   );
 }
