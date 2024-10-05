@@ -29,6 +29,9 @@ import { useState } from 'react';
 import CommandListScreen from './screens/CommandList';
 import OrderDetailScreen from './screens/OrderDetailScreen'; // Un écran pour les détails de commande
 import { StripeProvider } from '@stripe/stripe-react-native'; 
+import PointsPage from './screens/PointScreen';
+import PointsHistory from './screens/PointHistoriqueScrenn';
+
 
 
 const Stack = createStackNavigator();
@@ -141,7 +144,7 @@ function TabNavigator() {
       )}
 
       <Tab.Screen 
-        name="Profile" 
+        name="Profile " 
         component={ProfileScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -206,6 +209,8 @@ useEffect(() => {
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="CommandList" component={CommandListScreen} />
           <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+          <Stack.Screen name="PointsScreen" component={PointsPage} />
+          <Stack.Screen name="PointsHistoriqueScreen" component={PointsHistory} />
         </Stack.Navigator>
       </NavigationContainer>
       //</StripeProvider>

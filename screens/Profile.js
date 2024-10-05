@@ -32,15 +32,28 @@ const ProfileScreen = ({ navigation }) => {
                 }, [])
             );
             
+            const [role, setRole] = useState('');
 
+            useEffect(() => {
+              // Récupérer le rôle utilisateur depuis AsyncStorage
+              const getUserRole = async () => {
+                const user = await AsyncStorage.getItem('user');
+                if (user) {
+                  const parsedUser = JSON.parse(user);
+                  setRole(parsedUser.role); // Stocker le rôle de l'utilisateur
+                }
+              };
+          
+              getUserRole();
+            }, []);
 
    console.log(user);
    
 
-   
 
     return (
         <SafeAreaView style={styles.container}>
+            
             <TouchableOpacity onPress={() => navigation.navigate('personalInf', { user })} style={styles.profileContainer}>
                 <Image
                     source={require('../assets/images/femme-medecin.png')}
@@ -56,8 +69,17 @@ const ProfileScreen = ({ navigation }) => {
                     style={styles.Imagefleche}
                 />
             </TouchableOpacity>
+            {user && role === 'pharmacist' && (
+                <TouchableOpacity onPress={() => navigation.navigate('PointsScreen', { user })} style={styles.optionContainer}>
+                    <Image source={require('../assets/icons/recompense.png')} style={styles.optionIcon} /> 
+                    <Text style={styles.optionText}>{user.loyaltyPoints ? user.loyaltyPoints : 0} Points</Text>
+                    <Image source={require('../assets/icons/fleche.png')} style={styles.arrowIcon} />
+                </TouchableOpacity>
+            )}
+
             <View style={styles.separator} />
             <View style={styles.container2}>
+           
                 <View style={styles.setting}>
                     <Text style={[styles.sectionTitle, styles.boldText]}>Réglages</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('personalInf', { user })} style={styles.optionContainer}>
